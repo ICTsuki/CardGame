@@ -1,13 +1,26 @@
 package nonsystem;
 
+import gameenum.Rank;
 import gameenum.Suit;
 
 public class Card {
-    private final Suit type;
-    private String name;
+    private final Suit suit;
+    private final Rank rank;
 
-    public Card(Suit type, String name) {
-        this.type = type;
-        this.name = name;
+    public Card(Suit suit, Rank rank) {
+        this.suit= suit;
+        this.rank = rank;
+    }
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    @Override
+    public String toString() {
+        return rank + " of " + suit;
     }
 }
