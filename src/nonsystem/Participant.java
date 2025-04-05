@@ -30,5 +30,9 @@ public abstract class Participant implements Action {
     public void quitGame(){}
     public void login(){}
     public void logout(){}
-    public void inspectRule(){}
+    public void inspectRules(){}
+    public void playATurn(){}
+    public String getName() {
+        return this.name;
+    }
 }
