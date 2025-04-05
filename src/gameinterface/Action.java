@@ -6,4 +6,5 @@ public interface Action {
     public void login();
     public void logout();
     public void inspectRules();
+    public void playATurn();
 }
