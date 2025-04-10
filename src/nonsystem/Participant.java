@@ -37,4 +37,8 @@ public abstract class Participant implements Action {
     public String getName() {
         return this.name;
     }
+
+    public void setType(GameType type) {
+        this.type = type;
+    }
 }
