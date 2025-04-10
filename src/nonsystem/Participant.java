@@ -1,5 +1,6 @@
 package nonsystem;
 
+import gameenum.GameType;
 import gameenum.Status;
 import gameinterface.Action;
 
@@ -9,6 +10,7 @@ public abstract class Participant implements Action {
     protected Deck participantDeck;
     protected Account participantAccount;
     protected int rank;
+    protected GameType type;
 
     public Participant() {
         super();
@@ -34,5 +36,9 @@ public abstract class Participant implements Action {
     public void playATurn(){}
     public String getName() {
         return this.name;
+    }
+
+    public void setType(GameType type) {
+        this.type = type;
     }
 }

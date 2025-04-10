@@ -1,28 +1,36 @@
 package gamecore;
 
 import gameenum.GameType;
-import nonsystem.HostPlayer;
-import nonsystem.Player;
+import nonsystem.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Game {
-    private GameType type;
-    private int numberOfPlayer;
-    public static final Set<Player> players = new HashSet<>();
+    public static GameType type;
+    public static final Queue<Player> players = new LinkedList<>();
     public static final int MAXPLAYER = 4;
+    public static Field field;
 
     public Game() {
         super();
+        Game.type = GameType.NorthernPoker;
+        field = new NorthenPokerField();
     }
     public Game(GameType type, HostPlayer player) {
-        this.type = type;
+        Game.type = type;
         players.add(player);
+        player.setType(type);
+        if(Game.type.equals(GameType.NorthernPoker)) {
+            field = new NorthenPokerField();
+        }
+        else {
+            field = new PhomField();
+        }
     }
 
     public static void addPlayer(Player player) {
         players.add(player);
+        player.setType(Game.type);
     }
     public static void removePlayer(Player player) {
         players.remove(player);
