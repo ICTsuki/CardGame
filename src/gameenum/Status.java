@@ -1,5 +1,5 @@
 package gameenum;
 
 public enum Status {
-    Ready, Wait
+    READY, WAIT
 }

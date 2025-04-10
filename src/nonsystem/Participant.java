@@ -1,11 +1,11 @@
 package nonsystem;
 
-import gameenum.ParticipantStatus;
+import gameenum.Status;
 import gameinterface.Action;
 
 public abstract class Participant implements Action {
     protected String name;
-    protected ParticipantStatus state;
+    protected Status state;
     protected Deck participantDeck;
     protected Account participantAccount;
     protected int rank;
