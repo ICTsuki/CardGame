@@ -10,7 +10,8 @@ public abstract class Game {
     public static final Queue<Player> players = new LinkedList<>();
     public static final int MAXPLAYER = 4;
     public static Field field;
-    private final Deck deck;
+    protected final Deck deck;
+    protected  int currentTurn = 0;
 
     public Game() {
         super();
@@ -43,16 +44,7 @@ public abstract class Game {
         if(!players.isEmpty()) players.remove(player);
     }
 
-    private void deal() {
-        while(deck.remainingCards() != 0) {
-            Player current = players.poll();
-            Objects.requireNonNull(current).receiveCard(deck.dealCard());
-            players.offer(current);
-        }
-    }
+    public abstract void deal();
 
-    public void startGame() {
-        deck.shuffle();
-        deal();
-    }
+    public abstract void startGame();
 }

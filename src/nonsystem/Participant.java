@@ -51,4 +51,8 @@ public abstract class Participant implements Action {
     public void setType(GameType type) {
         this.type = type;
     }
+
+    public int getCardsAmount() {
+        return participantCards.size();
+    }
 }

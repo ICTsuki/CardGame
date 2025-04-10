@@ -14,7 +14,7 @@ public class HostPlayer extends Player{
             new NorthernPokerGame(this);
         }
         else {
-            new PhomGame();
+            new PhomGame(this);
         }
     }
 }
