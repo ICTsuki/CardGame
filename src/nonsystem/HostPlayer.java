@@ -1,5 +1,7 @@
 package nonsystem;
 
+import gamecore.NorthernPokerGame;
+import gamecore.PhomGame;
 import gameenum.GameType;
 import gamecore.Game;
 
@@ -8,6 +10,11 @@ public class HostPlayer extends Player{
         super();
     }
     public void CreateGame(GameType type) {
-        new Game(type, this);
+        if(type.equals(GameType.NorthernPoker)) {
+            new NorthernPokerGame(this);
+        }
+        else {
+            new PhomGame();
+        }
     }
 }
