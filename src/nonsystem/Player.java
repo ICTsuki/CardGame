@@ -19,4 +19,7 @@ public class Player extends Participant {
     public void inspectRules(){
         //nothing yet
     }
+    public void playATurn() {
+
+    }
 }
