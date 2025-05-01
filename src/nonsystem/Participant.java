@@ -13,15 +13,18 @@ public abstract class Participant implements Action {
     protected List<Card> participantCards;
     protected Account participantAccount;
     protected int rank;
-    protected GameType type;
+
 
     public Participant() {
         super();
         participantCards = new ArrayList<>();
     }
-    public Participant(String name, Account participantAccount) {
-        super();
+    public Participant(String name) {
+        this();
         this.name = name;
+    }
+    public Participant(String name, Account participantAccount) {
+        this(name);
         this.participantAccount = participantAccount;
         participantCards = new ArrayList<>();
     }
@@ -46,10 +49,6 @@ public abstract class Participant implements Action {
 
     public String getName() {
         return this.name;
-    }
-
-    public void setType(GameType type) {
-        this.type = type;
     }
 
     public int getCardsAmount() {

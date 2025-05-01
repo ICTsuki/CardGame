@@ -22,7 +22,6 @@ public abstract class Game {
     public Game(GameType type, HostPlayer player) {
         Game.type = type;
         players.add(player);
-        player.setType(type);
         if(Game.type.equals(GameType.NorthernPoker)) {
             field = new NorthenPokerField();
         }
@@ -38,7 +37,6 @@ public abstract class Game {
             return;
         }
         players.add(player);
-        player.setType(Game.type);
     }
     public static void removePlayer(Player player) {
         if(!players.isEmpty()) players.remove(player);
