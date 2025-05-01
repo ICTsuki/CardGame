@@ -9,6 +9,9 @@ public class HostPlayer extends Player{
     public HostPlayer() {
         super();
     }
+    public HostPlayer(String name) {
+        super(name);
+    }
     public void CreateGame(GameType type) {
         if(type.equals(GameType.NorthernPoker)) {
             new NorthernPokerGame(this);

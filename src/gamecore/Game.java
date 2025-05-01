@@ -6,28 +6,13 @@ import nonsystem.*;
 import java.util.*;
 
 public abstract class Game {
-    public static GameType type;
     public static final Queue<Player> players = new LinkedList<>();
     public static final int MAXPLAYER = 4;
-    public static Field field;
     protected final Deck deck;
-    protected  int currentTurn = 0;
+    protected int currentTurn = 0;
 
     public Game() {
         super();
-        Game.type = GameType.NorthernPoker;
-        field = new NorthenPokerField();
-        deck = new Deck();
-    }
-    public Game(GameType type, HostPlayer player) {
-        Game.type = type;
-        players.add(player);
-        if(Game.type.equals(GameType.NorthernPoker)) {
-            field = new NorthenPokerField();
-        }
-        else {
-            field = new PhomField();
-        }
         deck = new Deck();
     }
 

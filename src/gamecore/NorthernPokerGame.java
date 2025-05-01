@@ -16,8 +16,12 @@ public class NorthernPokerGame extends Game{
         }
     }
     public void startGame(){
-
         deck.shuffle();
         deal();
+        Player current = players.peek();
+        while(current.getCardsAmount() != 0) {
+            current.playATurn();
+            current = players.poll();
+        }
     }
 }
