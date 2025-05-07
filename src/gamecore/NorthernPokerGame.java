@@ -9,11 +9,15 @@ public class NorthernPokerGame extends Game{
         super(GameType.NorthernPoker, player);
     }
     public void deal() {
-        while(deck.remainingCards() != 0) {
+        while(deck.remainingCards() != 52 - players.size()*13) {
             Player current = players.poll();
             assert current != null : "require player to deal card!";
             current.receiveCard(deck.dealCard());
         }
     }
-    public void startGame(){}
+    public void startGame(){
+
+        deck.shuffle();
+        deal();
+    }
 }
