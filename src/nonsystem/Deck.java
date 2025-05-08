@@ -4,7 +4,7 @@ import java.util.*;
 import gameenum.*;
 
 public class Deck {
-    private final List<Card> cards;
+    public final List<Card> cards;
 
     public Deck() {
         cards = new ArrayList<>();
