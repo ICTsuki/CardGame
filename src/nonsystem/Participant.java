@@ -10,14 +10,14 @@ import java.util.List;
 public abstract class Participant implements Action {
     protected String name;
     protected Status state;
-    protected List<Card> participantCards;
+    protected List<Card> hand;
     protected Account participantAccount;
     protected int rank;
 
 
     public Participant() {
         super();
-        participantCards = new ArrayList<>();
+        hand = new ArrayList<>();
     }
     public Participant(String name) {
         this();
@@ -26,7 +26,7 @@ public abstract class Participant implements Action {
     public Participant(String name, Account participantAccount) {
         this(name);
         this.participantAccount = participantAccount;
-        participantCards = new ArrayList<>();
+        hand = new ArrayList<>();
     }
 
     public void createAccount(String email, String password) {
@@ -44,7 +44,7 @@ public abstract class Participant implements Action {
     public void playATurn(){}
 
     public void receiveCard(Card card) {
-        participantCards.add(card);
+        hand.add(card);
     }
 
     public String getName() {
@@ -52,6 +52,7 @@ public abstract class Participant implements Action {
     }
 
     public int getCardsAmount() {
-        return participantCards.size();
+        if(hand.isEmpty()) return 0;
+        return hand.size();
     }
 }

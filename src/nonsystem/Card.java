@@ -23,4 +23,8 @@ public class Card {
     public String toString() {
         return rank + " of " + suit;
     }
+
+    public static int compareRank(Rank r1, Rank r2) {
+        return Integer.compare(r1.getRankOrder(), r2.getRankOrder());
+    }
 }

@@ -10,5 +10,11 @@ public class CardGame {
         Player player4 = new Player("Khoa");
 
         Game game = new NorthernPokerGame();
+        player2.joinGame("Northen Poker", game);
+        player1.joinGame("Northen Poker", game);
+        player3.joinGame("Northen Poker", game);
+        player4.joinGame("Northen Poker", game);
+
+        game.startGame();
     }
 }
