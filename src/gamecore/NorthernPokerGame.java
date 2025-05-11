@@ -15,10 +15,9 @@ public class NorthernPokerGame extends Game{
         super();
     }
     public void deal() {
-        while(deck.remainingCards() != 52 - players.size()*13) {
+        while(deck.remainingCards() != 52 - players.size()*13 && !players.isEmpty()) {
             Player current = players.poll();
-            assert current != null : "require player to deal card!";
-            current.receiveCard(deck.dealCard());
+            Objects.requireNonNull(current).receiveCard(deck.dealCard());
         }
     }
 
