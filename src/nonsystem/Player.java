@@ -1,8 +1,6 @@
 package nonsystem;
 
 import gamecore.Game;
-import gamecore.NorthernPokerGame;
-import gamecore.PhomGame;
 
 public class Player extends Participant {
 
@@ -13,7 +11,7 @@ public class Player extends Participant {
     public Player(String name) {
         super(name);
     }
-    public void joinGame(String gametype, Game game) {
+    public void joinGame(Game game) {
         game.addPlayer(this);
     }
     public void quitGame() {

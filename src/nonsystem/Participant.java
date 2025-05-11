@@ -1,6 +1,5 @@
 package nonsystem;
 
-import gameenum.GameType;
 import gameenum.Status;
 import gameinterface.Action;
 
@@ -11,7 +10,6 @@ public abstract class Participant implements Action {
     protected String name;
     protected Status state;
     protected List<Card> hand;
-    protected Account participantAccount;
     protected int rank;
 
 
@@ -22,18 +20,6 @@ public abstract class Participant implements Action {
     public Participant(String name) {
         this();
         this.name = name;
-    }
-    public Participant(String name, Account participantAccount) {
-        this(name);
-        this.participantAccount = participantAccount;
-        hand = new ArrayList<>();
-    }
-
-    public void createAccount(String email, String password) {
-        participantAccount = new Account(email, password);
-    }
-    public void changePassword(String newPassword) {
-        participantAccount.changePassword(newPassword);
     }
 
     public void joinGame(){}
@@ -51,8 +37,20 @@ public abstract class Participant implements Action {
         return this.name;
     }
 
-    public int getCardsAmount() {
-        if(hand.isEmpty()) return 0;
-        return hand.size();
+    public List<Card> getHand() {
+        if(hand.isEmpty()) return null;
+        return hand;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public Status getState() {
+        return state;
+    }
+
+    public void setState(Status state) {
+        this.state = state;
     }
 }

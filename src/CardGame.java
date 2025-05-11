@@ -1,19 +1,20 @@
 import gamecore.Game;
 import gamecore.NorthernPokerGame;
-import nonsystem.Player;
+import nonsystem.NorthenPokerPlayer;
+//import nonsystem.Player;
 
 public class CardGame {
     public static void main(String[] args) {
-        Player player1 = new Player("Bao");
-        Player player2 = new Player("A Duc");
-        Player player3 = new Player("Hung");
-        Player player4 = new Player("Khoa");
+        NorthenPokerPlayer player1 = new NorthenPokerPlayer("Bao");
+        NorthenPokerPlayer player2 = new NorthenPokerPlayer("A Duc");
+        NorthenPokerPlayer player3 = new NorthenPokerPlayer("Hung");
+        NorthenPokerPlayer player4 = new NorthenPokerPlayer("Khoa");
 
-        Game game = new NorthernPokerGame();
-        player2.joinGame("Northen Poker", game);
-        player1.joinGame("Northen Poker", game);
-        player3.joinGame("Northen Poker", game);
-        player4.joinGame("Northen Poker", game);
+        NorthernPokerGame game = new NorthernPokerGame();
+        player2.joinGame(game);
+        player1.joinGame(game);
+        player3.joinGame(game);
+        player4.joinGame(game);
 
         game.startGame();
     }

@@ -117,7 +117,7 @@ public class PhomPlayer extends Player{
         return deck.cards.removeFirst();
     }
 
-    public void release() {
+    public void releasePhom() {
 
     }
 }

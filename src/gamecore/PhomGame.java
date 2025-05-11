@@ -1,9 +1,6 @@
 package gamecore;
 
-import gameenum.GameType;
 import nonsystem.Deck;
-import nonsystem.HostPlayer;
-import nonsystem.PhomPlayer;
 import nonsystem.Player;
 
 public class PhomGame extends Game{
@@ -18,7 +15,7 @@ public class PhomGame extends Game{
         while(deck.remainingCards() >= 52 - players.size() * 9) {
             Player current = players.poll();
             assert current != null : "Require player to deal card!";
-            if(current.getCardsAmount() <= 9) {
+            if(current.getHand().size() <= 9) {
                 current.receiveCard(deck.dealCard());
                 players.offer(current);
             }
@@ -58,4 +55,7 @@ public class PhomGame extends Game{
         }
     }
 
+    public static void showPhomField() {
+
+    }
 }

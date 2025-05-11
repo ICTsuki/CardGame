@@ -1,13 +1,15 @@
 package gamecore;
 
+import gameenum.Status;
 import nonsystem.Card;
 import nonsystem.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class NorthernPokerGame extends Game{
-    public static List<ArrayList<Card>> PokerField = new ArrayList<>();
+    public static final List<ArrayList<Card>> PokerField = new ArrayList<>();
 
     public NorthernPokerGame() {
         super();
@@ -21,12 +23,18 @@ public class NorthernPokerGame extends Game{
     }
 
     public void startGame(){
-        deck.shuffle();
-        deal();
-        Player current = players.peek();
-        while(current.getCardsAmount() != 0) {
-            current.playATurn();
-            current = players.poll();
+        if(!players.isEmpty()){
+            deck.shuffle();
+            deal();
+            Player current = players.peek();
+            while(Objects.requireNonNull(current).getHand() != null && current.getState() != Status.WAIT) {
+                current.playATurn();
+                current = players.poll();
+            }
+
+        }
+        else {
+            System.out.println("There're no player");
         }
     }
 
@@ -36,5 +44,12 @@ public class NorthernPokerGame extends Game{
             return;
         }
         players.add(player);
+    }
+
+    public static void showPokerField() {
+        for(Card card : PokerField.getLast()) {
+            System.out.print(card.toString());
+        }
+        System.out.println();
     }
 }
