@@ -3,6 +3,7 @@ package nonsystem;
 import gameenum.Rank;
 import gameenum.Suit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Card {
     private final Suit suit;
@@ -32,7 +33,7 @@ public class Card {
     public static List<Card> sortCard(Collection<Card> cards1) {
         return cards1.stream()
                 .sorted(Comparator.comparing(c -> c.getSuit().getSuitOrder()))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public static Map<String, List<Card>> sortCards(List<Collection<Card>> cardsList) {
