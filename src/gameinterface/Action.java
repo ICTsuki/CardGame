@@ -1,14 +1,20 @@
 package gameinterface;
 
-public interface Action {
-    public void joinGame();
-    public void quitGame();
-    public void login();
-    public void logout();
-    public void inspectRules();
-    public void playATurn();
+import nonsystem.Card;
 
-    public static void clearScreen() {
+import java.util.*;
+
+public interface Action {
+    void joinGame();
+    void quitGame();
+    void login();
+    void logout();
+    void inspectRules();
+    void playATurn();
+
+    static void clearScreen() {
         for (int i = 0; i < 50; i++) System.out.println();
     }
+
+
 }

@@ -5,6 +5,7 @@ import gameenum.Status;
 import gameinterface.Action;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class NorthenPokerPlayer extends Player{
@@ -20,6 +21,8 @@ public class NorthenPokerPlayer extends Player{
         for(int i = 0; i < 2; i++) System.out.println();
     }
 
+
+
     public void playATurn() {
         spacing();
         if(!NorthernPokerGame.PokerField.isEmpty()) NorthernPokerGame.showPokerField();
@@ -27,7 +30,10 @@ public class NorthenPokerPlayer extends Player{
         showInfo();
         System.out.println("Cards on hand: ");
         showCardOnHand();
-        ArrayList<Card> cardsToPlay = chooseCards();
+        ArrayList<Card> cardsToPlay;
+        while(!valid(cardsToPlay = chooseCards())) {
+            System.out.println("Invalid cards!\n Please choose another cards:");
+        }
         if(cardsToPlay == null) pass();
         else {
             for(Card card : cardsToPlay) {
@@ -60,11 +66,21 @@ public class NorthenPokerPlayer extends Player{
     }
 
     public void showCardOnHand() {
+        hand = Card.sortCard(hand);
         int i = 0;
         for(Card card : hand) {
             System.out.println(i + ": " + card.toString());
             i++;
         }
         System.out.println();
+    }
+
+    private boolean valid(List<Card> playCards) {
+        if (NorthernPokerGame.PokerField.isEmpty()) return true;
+        List<Card> fieldCards = NorthernPokerGame.PokerField.getFirst();
+        if (Card.sameSuits(playCards, fieldCards)) {
+            return Card.compareCards(playCards, fieldCards);
+        }
+        else return false;
     }
 }
