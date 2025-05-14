@@ -16,10 +16,13 @@ public abstract class Participant implements Action {
     public Participant() {
         super();
         hand = new ArrayList<>();
+        this.state = Status.READY;
     }
     public Participant(String name) {
         this();
         this.name = name;
+        hand = new ArrayList<>();
+        this.state = Status.READY;
     }
 
     public void joinGame(){}
@@ -52,5 +55,9 @@ public abstract class Participant implements Action {
 
     public void setState(Status state) {
         this.state = state;
+    }
+
+    public void showInfo() {
+        System.out.println(name + " " + state.toString());
     }
 }

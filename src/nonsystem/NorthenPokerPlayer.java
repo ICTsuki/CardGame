@@ -16,8 +16,16 @@ public class NorthenPokerPlayer extends Player{
         super(name);
     }
 
+    private void spacing() {
+        for(int i = 0; i < 2; i++) System.out.println();
+    }
+
     public void playATurn() {
+        spacing();
         if(!NorthernPokerGame.PokerField.isEmpty()) NorthernPokerGame.showPokerField();
+        spacing();
+        showInfo();
+        System.out.println("Cards on hand: ");
         showCardOnHand();
         ArrayList<Card> cardsToPlay = chooseCards();
         if(cardsToPlay == null) pass();
@@ -29,8 +37,6 @@ public class NorthenPokerPlayer extends Player{
 
         NorthernPokerGame.PokerField.add(cardsToPlay);
         Action.clearScreen();
-        NorthernPokerGame.showPokerField();
-        showCardOnHand();
     }
 
     public void pass() {
@@ -38,14 +44,14 @@ public class NorthenPokerPlayer extends Player{
     }
 
     public ArrayList<Card> chooseCards() {
-        System.out.println("Enter 1, 2, 3, 4, ..., " + hand.size() + " for card choosing: \n" +
+        System.out.println("Enter 0, 1, 2, 3, 4, ..., " + (hand.size() - 1) + " for card choosing: \n" +
                 "(Several cards should be differ by space)\n" +
-                "(Enter 0 if you want to pass.");
+                "(Enter -1 if you want to pass.)");
 
         ArrayList<Card> cardChosen = new ArrayList<>();
         String str = scanner.nextLine();
 
-        if(str.equals("0")) return null;
+        if(str.equals("-1")) return null;
         for(String s : str.split(" ")){
             cardChosen.add(hand.get(Integer.parseInt(s)));
         }
@@ -54,8 +60,10 @@ public class NorthenPokerPlayer extends Player{
     }
 
     public void showCardOnHand() {
+        int i = 0;
         for(Card card : hand) {
-            System.out.print(card.toString() + " ");
+            System.out.println(i + ": " + card.toString());
+            i++;
         }
         System.out.println();
     }

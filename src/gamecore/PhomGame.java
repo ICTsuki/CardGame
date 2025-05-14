@@ -4,7 +4,7 @@ import nonsystem.Deck;
 import nonsystem.Player;
 
 public class PhomGame extends Game{
-    public static int PHOMMAXTURN = players.size() * 4;
+    public int PHOMMAXTURN = players.size() * 4;
     private int round = 0;
 
     public PhomGame() {

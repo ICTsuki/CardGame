@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhomField extends Field{
-    public static List<List<Card>> playerField = new ArrayList<>(Game.players.size());
-    public PhomField() {
+    public List<List<Card>> playerField;
+    public PhomField(Game game) {
+        playerField = new ArrayList<>(game.getPlayers().size() * 4);
         for(List<Card> field : playerField) {
             field = new ArrayList<>();
         }

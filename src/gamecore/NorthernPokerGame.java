@@ -18,18 +18,30 @@ public class NorthernPokerGame extends Game{
         while(deck.remainingCards() != 52 - players.size()*13 && !players.isEmpty()) {
             Player current = players.poll();
             Objects.requireNonNull(current).receiveCard(deck.dealCard());
+            players.add(current);
         }
     }
 
     public void startGame(){
         if(!players.isEmpty()){
+            showPlayer();
             deck.shuffle();
             deal();
-            Player current = players.peek();
-            while(Objects.requireNonNull(current).getHand() != null && current.getState() != Status.WAIT) {
+            showPlayer();
+            Player current = players.poll();
+            if(current == null) System.out.println("initial null");
+            while(current != null && current.getHand() != null) {
+                if (current.getState() == Status.WAIT) {
+                    players.add(current);
+                    current = players.poll();
+                    continue;
+                }
                 current.playATurn();
+                players.add(current);
                 current = players.poll();
             }
+            if(current == null) System.out.println("Null player");
+            else System.out.println("End game");
 
         }
         else {
@@ -43,6 +55,8 @@ public class NorthernPokerGame extends Game{
             return;
         }
         players.add(player);
+        System.out.println("Player added !");
+        System.out.println("Current player: " + players.size());
     }
 
     public static void showPokerField() {
@@ -50,5 +64,15 @@ public class NorthernPokerGame extends Game{
             System.out.print(card.toString());
         }
         System.out.println();
+    }
+
+    public void showPlayer() {
+        if(players.isEmpty()) {
+            System.out.println("no player");
+            return;
+        }
+        for(Player player : players) {
+            player.showInfo();
+        }
     }
 }

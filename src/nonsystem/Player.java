@@ -14,8 +14,8 @@ public class Player extends Participant {
     public void joinGame(Game game) {
         game.addPlayer(this);
     }
-    public void quitGame() {
-        Game.removePlayer(this);
+    public void quitGame(Game game) {
+        game.removePlayer(this);
     }
     public void login() {
         //nothing yet
