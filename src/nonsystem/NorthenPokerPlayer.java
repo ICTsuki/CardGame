@@ -41,7 +41,7 @@ public class NorthenPokerPlayer extends Player{
             }
         }
 
-        NorthernPokerGame.PokerField.add(cardsToPlay);
+        if(cardsToPlay != null) NorthernPokerGame.PokerField.add(cardsToPlay);
         Action.clearScreen();
     }
 
@@ -58,7 +58,7 @@ public class NorthenPokerPlayer extends Player{
         String str = scanner.nextLine();
 
         if(str.equals("-1")) return null;
-        for(String s : str.split(" ")){
+        for(String s : str.split(" ")){ // 0 1 2
             cardChosen.add(hand.get(Integer.parseInt(s)));
             System.out.print("Card choose: " + cardChosen.toString() + " ");
         }
@@ -77,6 +77,7 @@ public class NorthenPokerPlayer extends Player{
     }
 
     private boolean valid(List<Card> playCards) {
+        if(playCards == null) return true;
         if (NorthernPokerGame.PokerField.isEmpty()) return true;
         List<Card> fieldCards = NorthernPokerGame.PokerField.getFirst();
         for(Card card : fieldCards) System.out.println(card.toString());
