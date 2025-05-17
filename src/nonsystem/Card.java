@@ -50,8 +50,8 @@ public class Card {
 
     /**
      * This method compare if 2 cards have the same suit of every element card
-     * @param cards1
-     * @param cards2
+     * @param cards1 set of card 1
+     * @param cards2 set of card 2
      * @return true if both cards have same suit of all element card
      */
     public static boolean sameSuits(Collection<Card> cards1, Collection<Card> cards2) {
@@ -70,14 +70,27 @@ public class Card {
      * @param cards2 Current cards on field
      * @return true if your card2 bigger than field cards
      */
-    public static boolean compareCards(Collection<Card> cards1, Collection<Card> cards2) {
+    public static boolean isBigger(Collection<Card> cards1, Collection<Card> cards2) {
 
-        Map<String, List<Card>> sort = sortCards(Arrays.asList(cards2, cards1));
+        Map<String, List<Card>> sort = sortCards(Arrays.asList(cards1, cards2));
 
-        for(int i = 0; i < sort.get("sort1").size(); i++) {
-            if(compareRank(sort.get("sort1").get(i).rank, sort.get("sort2").get(i).rank) <= 0) return false;
+        int i = 0;
+        for(Card card : sort.get("sort1")) {
+            System.out.print(i++ + " " + card.toString() + " ");
         }
-        return true;
 
+        i = 0;
+        for(Card card : sort.get("sort2")) {
+            System.out.print(i++ + card.toString() + " ");
+        }
+
+        for(i = 0; i < sort.get("sort1").size(); i++) {
+            if(compareRank(sort.get("sort1").get(i).rank, sort.get("sort2").get(i).rank) <= 0){
+                System.out.println("Card chose smaller than field.\nPlease choose others or pass turn!");
+                return false;
+            }
+        }
+        System.out.println("Appropriate card");
+        return true;
     }
 }

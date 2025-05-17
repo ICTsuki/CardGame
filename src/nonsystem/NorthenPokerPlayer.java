@@ -82,8 +82,12 @@ public class NorthenPokerPlayer extends Player{
         List<Card> fieldCards = NorthernPokerGame.PokerField.getFirst();
         for(Card card : fieldCards) System.out.println(card.toString());
         if (Card.sameSuits(playCards, fieldCards)) {
-            return Card.compareCards(playCards, fieldCards);
+            System.out.println("Start comparing rank");
+            return Card.isBigger(playCards, fieldCards);
         }
-        else return false;
+        else {
+            System.out.println("Card chosen need to be the same suit as field");
+            return false;
+        }
     }
 }
