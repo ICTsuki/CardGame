@@ -95,14 +95,22 @@ public class NorthenPokerPlayer extends Player {
                 }
                 else break;
             }
-            return true; // Player continue to play since no other players can play back
+
+            return playCards.size() == 1 ||
+                    Card.doubleCombo(playCards) ||
+                    Card.tripleCombo(playCards) ||
+                    Card.straight(playCards);
+            // Player continue to play since no other players can play back
         }
 
         if(NorthenPokerField.field.isEmpty()) {
-            if(playCards.size() == 1) return true;
-            else return Card.doubleCombo(playCards) || Card.tripleCombo(playCards) || Card.straight(playCards);
+            return playCards.size() == 1 ||
+                    Card.doubleCombo(playCards) ||
+                    Card.tripleCombo(playCards) ||
+                    Card.straight(playCards);
         }
 
-        return Card.sameSuits(playCards, fieldCards) && Card.isBigger(playCards, fieldCards);
+        return Card.sameSuits(playCards, fieldCards) &&
+                Card.isBigger(playCards, fieldCards);
     }
 }

@@ -99,7 +99,6 @@ public class Card {
                 cards.get(0).rank.getRankOrder() == cards.get(1).rank.getRankOrder();
     }
 
-
     public static boolean tripleCombo(List<Card> cards) {
         return cards.get(0).rank.getRankOrder() == cards.get(1).rank.getRankOrder() &&
                 cards.get(1).rank.getRankOrder() == cards.get(2).rank.getRankOrder();
