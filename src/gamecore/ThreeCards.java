@@ -1,11 +1,20 @@
 package gamecore;
 
+import nonsystem.Card;
 import nonsystem.Player;
 
+import java.util.*;
+
 public class ThreeCards extends Game{
+    List<Map<String, Integer>> scoreLeaderBoard = new ArrayList<>();
+
+    public ThreeCards() {
+        super();
+    }
+
     @Override
     public void addPlayer(Player player) {
-        if(players.size() + 1 > MAXPLAYER) {
+        if(players.size() + 1 > 12) {
             System.out.println("Player full!");
             return;
         }
@@ -14,13 +23,63 @@ public class ThreeCards extends Game{
         System.out.println("Current player: " + players.size());
     }
 
+
+    public void remove10JQK() {
+        Iterator<Card> it = deck.getCards().iterator();
+        while(it.hasNext()) {
+            Card card = it.next();
+            if(card.getRank().getValue() >= 10 && card.getRank().getValue() <= 13) {
+                it.remove();  // safe removal during iteration
+            }
+        }
+
+        deck.shuffle();
+    }
+
     @Override
     public void deal() {
-
+        remove10JQK();
+        Player current = players.poll();
+        if(current == null) {
+            System.out.println("No player to deal!");
+        }
+        else {
+            while(current.getHand().size() < 3) {
+                current.receiveCard(deck.dealCard(););
+                players.add(current);
+                current = players.poll();
+                if(current == null) {
+                    System.out.println("No player to deal or deal finish");
+                    break;
+                }
+            }
+            players.add(current);
+        }
     }
 
     @Override
     public void startGame() {
+        deal();
 
+        for(Player player : players) {
+            int sum = 0;
+            sum += player.getHand().get(0).getRank().getValue() +
+                    player.getHand().get(1).getRank().getValue() +
+                    player.getHand().get(2).getRank().getValue();
+
+            Map<String, Integer> playerMap = new HashMap<>();
+            playerMap.put(player.getName(), sum % 10);
+            scoreLeaderBoard.add(playerMap);
+
+        }
+
+        scoreLeaderBoard.sort(Comparator.comparingInt((Map<String, Integer> map) -> map.values().iterator().next())
+                        .reversed());
+
+        for(Map<String, Integer> m : scoreLeaderBoard) {
+            String key = m.keySet().iterator().next();
+            Integer value = m.get(key);
+            System.out.println(key + ": " + value);
+        }
     }
 }

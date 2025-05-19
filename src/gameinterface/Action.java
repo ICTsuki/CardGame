@@ -1,11 +1,9 @@
 package gameinterface;
 
-import nonsystem.Card;
-
-import java.util.*;
+import gamecore.Game;
 
 public interface Action {
-    void joinGame();
+    void joinGame(Game game);
     void quitGame();
     void login();
     void logout();

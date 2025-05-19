@@ -1,5 +1,6 @@
 package nonsystem;
 
+import gamecore.Game;
 import gameenum.Status;
 import gameinterface.Action;
 
@@ -9,23 +10,21 @@ import java.util.List;
 public abstract class Participant implements Action {
     protected String name;
     protected Status state;
-    protected List<Card> hand;
+    protected List<Card> hand = new ArrayList<>();
     protected int rank;
 
 
     public Participant() {
         super();
-        hand = new ArrayList<>();
         this.state = Status.READY;
     }
     public Participant(String name) {
         this();
         this.name = name;
-        hand = new ArrayList<>();
         this.state = Status.READY;
     }
 
-    public void joinGame(){}
+    public void joinGame(Game game){}
     public void quitGame(){}
     public void login(){}
     public void logout(){}
@@ -41,7 +40,7 @@ public abstract class Participant implements Action {
     }
 
     public List<Card> getHand() {
-        if(hand.isEmpty()) return null;
+        if(hand.isEmpty()) return new ArrayList<>();
         return hand;
     }
 

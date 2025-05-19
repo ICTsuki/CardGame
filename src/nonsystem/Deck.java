@@ -4,7 +4,7 @@ import java.util.*;
 import gameenum.*;
 
 public class Deck {
-    public final List<Card> cards;
+    private final List<Card> cards;
 
     public Deck() {
         cards = new ArrayList<>();
@@ -26,5 +26,13 @@ public class Deck {
 
     public int remainingCards() {
         return cards.size();
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void removeCard(Card card) {
+        cards.remove(card);
     }
 }
