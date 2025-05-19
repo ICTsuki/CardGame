@@ -61,7 +61,7 @@ public class NorthernPokerGame extends Game{
 
     public static void showPokerField() {
         for(Card card : PokerField.getLast()) {
-            System.out.print(card.toString());
+            System.out.println(card.toString());
         }
         System.out.println();
     }

@@ -8,7 +8,7 @@ import java.util.List;
 public class PhomField extends Field{
     public List<List<Card>> playerField;
     public PhomField(Game game) {
-        playerField = new ArrayList<>(game.getPlayers().size() * 4);
+        playerField = new ArrayList<>(Game.players.size() * 4);
         for(List<Card> field : playerField) {
             field = new ArrayList<>();
         }

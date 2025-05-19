@@ -74,23 +74,12 @@ public class Card {
 
         Map<String, List<Card>> sort = sortCards(Arrays.asList(cards1, cards2));
 
-        int i = 0;
-        for(Card card : sort.get("sort1")) {
-            System.out.print(i++ + " " + card.toString() + " ");
-        }
-
-        i = 0;
-        for(Card card : sort.get("sort2")) {
-            System.out.print(i++ + card.toString() + " ");
-        }
-
-        for(i = 0; i < sort.get("sort1").size(); i++) {
+        for(int i = 0; i < sort.get("sort1").size(); i++) {
             if(compareRank(sort.get("sort1").get(i).rank, sort.get("sort2").get(i).rank) <= 0){
                 System.out.println("Card chose smaller than field.\nPlease choose others or pass turn!");
                 return false;
             }
         }
-        System.out.println("Appropriate card");
         return true;
     }
 }
