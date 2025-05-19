@@ -8,10 +8,13 @@ import java.util.stream.Collectors;
 public class Card {
     private final Suit suit;
     private final Rank rank;
+    private final String color;
 
     public Card(Suit suit, Rank rank) {
         this.suit= suit;
         this.rank = rank;
+        if(suit.equals(Suit.HEART) || suit.equals(Suit.DIAMOND)) color = "RED";
+        else color = "BLACK";
     }
     public Suit getSuit() {
         return suit;
@@ -70,7 +73,7 @@ public class Card {
      * @param cards2 Current cards on field
      * @return true if your card2 bigger than field cards
      */
-    public static boolean isBigger(Collection<Card> cards1, Collection<Card> cards2) {
+    public static boolean isBigger(List<Card> cards1, List<Card> cards2) {
 
         Map<String, List<Card>> sort = sortCards(Arrays.asList(cards1, cards2));
 
@@ -80,6 +83,41 @@ public class Card {
                 return false;
             }
         }
+
+        if(doubleCombo(cards1) && doubleCombo(cards2)) {
+            return compareRank(cards1.getFirst().rank, cards2.getFirst().rank) > 0;
+        }
+        if(tripleCombo(cards1) && tripleCombo(cards2)) {
+            return cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
+        }
+
+        return true;
+    }
+
+    public static boolean doubleCombo(List<Card> cards) {
+        return cards.get(0).color.equals(cards.get(1).color) &&
+                cards.get(0).rank.getRankOrder() == cards.get(1).rank.getRankOrder();
+    }
+
+
+    public static boolean tripleCombo(List<Card> cards) {
+        return cards.get(0).rank.getRankOrder() == cards.get(1).rank.getRankOrder() &&
+                cards.get(1).rank.getRankOrder() == cards.get(2).rank.getRankOrder();
+    }
+
+    public static boolean straight(List<Card> cards) {
+        Suit suitCombo = cards.getFirst().suit;
+        for(int i = 1; i < cards.size(); i++) {
+            if(!cards.get(i).suit.equals(suitCombo)) return false;
+        }
+
+        List<Card> sorted = sortCard(cards);
+        int prevRank = sorted.getFirst().rank.getRankOrder();
+        for(int i = 1; i < sorted.size(); i++) {
+            if(sorted.get(i).rank.getRankOrder() - prevRank != 1) return false;
+            prevRank = sorted.get(i).rank.getRankOrder();
+        }
+
         return true;
     }
 }

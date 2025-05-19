@@ -20,7 +20,7 @@ public class NorthenPokerPlayer extends Player {
     }
 
     private void spacing() {
-        for (int i = 0; i < 2; i++) System.out.println();
+        for (int i = 0; i < 1; i++) System.out.println();
     }
 
     public void playATurn() {
@@ -30,6 +30,7 @@ public class NorthenPokerPlayer extends Player {
         showInfo();
         System.out.println("Cards on hand: ");
         showCardOnHand();
+
         ArrayList<Card> cardsToPlay;
         while (!valid(cardsToPlay = chooseCards())) {
             System.out.println("Invalid cards!\n Please choose another cards:");
@@ -42,6 +43,7 @@ public class NorthenPokerPlayer extends Player {
         }
 
         if (cardsToPlay != null) NorthernPokerGame.PokerField.add(cardsToPlay);
+        NorthernPokerGame.previousPlayer = this;
         Action.clearScreen();
     }
 
@@ -65,7 +67,7 @@ public class NorthenPokerPlayer extends Player {
         for (String s : str.split(" ")) { // 0 1 2
             cardChosen.add(hand.get(Integer.parseInt(s)));
         }
-        NorthernPokerGame.previousPlayer = this;
+
         return cardChosen;
     }
 
@@ -76,10 +78,13 @@ public class NorthenPokerPlayer extends Player {
             System.out.println(i + ": " + card.toString());
             i++;
         }
-        System.out.println();
     }
 
-    private boolean specialcase() {
+
+    private boolean valid(List<Card> playCards) {
+        List<Card> fieldCards = NorthernPokerGame.PokerField.getFirst();
+        if(playCards == null) return true;
+
         if (NorthernPokerGame.previousPlayer.equals(this)) {
             int t = NorthernPokerGame.players.size();
             while (t-- > 0) {
@@ -87,19 +92,17 @@ public class NorthenPokerPlayer extends Player {
                 if (player != null) {
                     player.setState(Status.READY);
                     NorthernPokerGame.players.add(player);
-                } else {
-                    break;
                 }
+                else break;
             }
             return true; // Player continue to play since no other players can play back
         }
-        return NorthernPokerGame.PokerField.isEmpty(); // Player is the first to play
-    }
 
-    private boolean valid(List<Card> playCards) {
-        List<Card> fieldCards = NorthernPokerGame.PokerField.getFirst();
-        return playCards == null || // Player pass
-                specialcase() ||
-                Card.sameSuits(playCards, fieldCards) && Card.isBigger(playCards, fieldCards);
+        if(NorthenPokerField.field.isEmpty()) {
+            if(playCards.size() == 1) return true;
+            else return Card.doubleCombo(playCards) || Card.tripleCombo(playCards) || Card.straight(playCards);
+        }
+
+        return Card.sameSuits(playCards, fieldCards) && Card.isBigger(playCards, fieldCards);
     }
 }
