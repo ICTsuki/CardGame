@@ -1,6 +1,5 @@
 package gamecore;
 
-import gameenum.GameType;
 import nonsystem.*;
 
 import java.util.*;
@@ -10,7 +9,6 @@ public abstract class Game {
     public static Player previousPlayer;
     public static final int MAXPLAYER = 4;
     protected final Deck deck;
-    protected int currentTurn = 0;
 
     public Game() {
         super();
@@ -18,9 +16,6 @@ public abstract class Game {
     }
 
     public abstract void addPlayer(Player player);
-    public void removePlayer(Player player) {
-        if(!players.isEmpty()) players.remove(player);
-    }
 
     public abstract void deal();
 

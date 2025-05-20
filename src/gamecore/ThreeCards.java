@@ -1,6 +1,5 @@
 package gamecore;
 
-import nonsystem.Card;
 import nonsystem.Player;
 
 import java.util.*;
@@ -25,14 +24,8 @@ public class ThreeCards extends Game{
 
 
     public void remove10JQK() {
-        Iterator<Card> it = deck.getCards().iterator();
-        while(it.hasNext()) {
-            Card card = it.next();
-            if(card.getRank().getValue() >= 10 && card.getRank().getValue() <= 13) {
-                it.remove();  // safe removal during iteration
-            }
-        }
-
+        // safe removal during iteration
+        deck.getCards().removeIf(card -> card.getRank().getValue() >= 10 && card.getRank().getValue() <= 13);
         deck.shuffle();
     }
 
@@ -45,7 +38,7 @@ public class ThreeCards extends Game{
         }
         else {
             while(current.getHand().size() < 3) {
-                current.receiveCard(deck.dealCard(););
+                current.receiveCard(deck.dealCard());
                 players.add(current);
                 current = players.poll();
                 if(current == null) {

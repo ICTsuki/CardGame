@@ -11,8 +11,6 @@ public abstract class Participant implements Action {
     protected String name;
     protected Status state;
     protected List<Card> hand = new ArrayList<>();
-    protected int rank;
-
 
     public Participant() {
         super();
@@ -25,9 +23,6 @@ public abstract class Participant implements Action {
     }
 
     public void joinGame(Game game){}
-    public void quitGame(){}
-    public void login(){}
-    public void logout(){}
     public void inspectRules(){}
     public void playATurn(){}
 
@@ -42,10 +37,6 @@ public abstract class Participant implements Action {
     public List<Card> getHand() {
         if(hand.isEmpty()) return new ArrayList<>();
         return hand;
-    }
-
-    public int getRank() {
-        return rank;
     }
 
     public Status getState() {
