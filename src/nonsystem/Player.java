@@ -14,7 +14,5 @@ public class Player extends Participant {
     public void joinGame(Game game) {
         game.addPlayer(this);
     }
-    public void inspectRules(){
-        //nothing yet
-    }
+
 }

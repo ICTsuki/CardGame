@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 public class NorthenPokerPlayer extends Player {
     private final Scanner scanner = new Scanner(System.in);
 
@@ -100,7 +104,7 @@ public class NorthenPokerPlayer extends Player {
                     Card.doubleCombo(playCards) ||
                     Card.tripleCombo(playCards) ||
                     Card.straight(playCards);
-            // Player continue to play since no other players can play back
+            // Player continue to play since no one can play back
         }
 
         if(NorthenPokerField.field.isEmpty()) {
@@ -112,5 +116,46 @@ public class NorthenPokerPlayer extends Player {
 
         return Card.sameSuits(playCards, fieldCards) &&
                 Card.isBigger(playCards, fieldCards);
+    }
+
+    public void inspectRules(){
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Type 1 if you want English game rule and 0 if you want Vietnamese game rule");
+            int t = sc.nextInt();
+
+            if (t == 0) {
+                File file = new File("gamerule/Northern Poker/Rule - VietNamese.txt");
+                openTextFile(file);
+                break;
+            } else if (t == 1) {
+                File file = new File("gamerule/Northern Poker/Rule - English.txt");
+                openTextFile(file);
+                break;
+            } else {
+                System.out.println("Please type as instructed!");
+            }
+        }
+
+        sc.close();
+    }
+
+    private void openTextFile(File file) {
+        if(!file.exists()) {
+            System.out.println("File not found!");
+            return;
+        }
+
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                desktop.open(file);
+            } catch (IOException e) {
+                System.out.println("Error opening file: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Desktop not supported on this platform.");
+        }
     }
 }
