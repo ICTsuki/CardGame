@@ -5,6 +5,7 @@ import gameenum.Status;
 import gameinterface.Action;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -76,7 +77,7 @@ public class NorthenPokerPlayer extends Player {
     }
 
     public void showCardOnHand() {
-        hand = Card.sortCard(hand);
+        hand = Card.sortCardSuit(hand);
         int i = 0;
         for (Card card : hand) {
             System.out.println(i + ": " + card.toString());
@@ -111,10 +112,11 @@ public class NorthenPokerPlayer extends Player {
             return playCards.size() == 1 ||
                     Card.doubleCombo(playCards) ||
                     Card.tripleCombo(playCards) ||
-                    Card.straight(playCards);
+                    Card.straight(playCards) ||
+                    Card.quadCombo(playCards);
         }
 
-        return Card.sameSuits(playCards, fieldCards) &&
+        return Card.sameSuits(Arrays.asList(playCards, fieldCards)) &&
                 Card.isBigger(playCards, fieldCards);
     }
 

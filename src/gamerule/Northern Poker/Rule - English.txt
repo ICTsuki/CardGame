@@ -22,20 +22,15 @@ Vietnamese Northern Poker Game Rule - English
 - Triple: Three cards of the same value.
 - Straight: 3 or more consecutive cards (different suits, no 2s allowed).
 - Four of a Kind: Four cards of the same value (can beat a 2).
-- Double Sequence: 3 or more consecutive pairs (can beat a 2 in some rules).
 
 5. SPECIAL "BEATING" RULES:
-- Cards with value 2 can only be beaten by:
-  + A Four of a Kind
-  + A Double Sequence of 3 or more pairs (depending on house rules)
+- Cards with value 2 can only be beaten by: A Four of a Kind
 - The 2♥ (Two of Hearts) is the strongest single and can only be beaten by combos.
 - 2s are not allowed in straights.
 
 6. END OF ROUND:
 - The first player to play all their cards wins.
-- Players who still hold cards may receive penalties:
-  + Holding 2s, Four of a Kind, or combos may result in heavier fines.
-  + Holding all 13 cards is called "full hand" or "instant loss" – double penalty.
+
 
 7. OPTIONAL HOUSE RULES:
 - Chain Beating: A special combo can beat a previously played combo.

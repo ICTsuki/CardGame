@@ -29,42 +29,37 @@ public class Card {
         return rank + " of " + suit;
     }
 
-    public static int compareRank(Rank r1, Rank r2) {
-        return Integer.compare(r1.getRankOrder(), r2.getRankOrder());
-    }
 
-    public static List<Card> sortCard(Collection<Card> cards1) {
-        return cards1.stream()
+    public static List<Card> sortCardSuit(Collection<Card> cards) {
+        return cards.stream()
                 .sorted(Comparator.comparing(c -> c.getSuit().getSuitOrder()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public static Map<String, List<Card>> sortCards(List<Collection<Card>> cardsList) {
-        Map<String, List<Card>> sortedCards = new HashMap<>();
-
-        // Loop through each Collection<Card> in the list
-        for (int i = 0; i < cardsList.size(); i++) {
-            List<Card> sortedList = sortCard(cardsList.get(i));
-            sortedCards.put("sort" + (i + 1), sortedList);  // Add each sorted collection to the map
-        }
-
-        return sortedCards;
+    public static List<Card> sortCardRank(Collection<Card> cards) {
+        return cards.stream()
+                .sorted(Comparator.comparing(c -> c.getRank().getRankOrder()))
+                .collect(Collectors.toCollection(ArrayList :: new));
     }
 
-    /**
-     * This method compare if 2 cards have the same suit of every element card
-     * @param cards1 set of card 1
-     * @param cards2 set of card 2
-     * @return true if both cards have same suit of all element card
-     */
-    public static boolean sameSuits(Collection<Card> cards1, Collection<Card> cards2) {
-        Map<String, List<Card>> sort = Card.sortCards(Arrays.asList(cards2, cards1));
 
-        for(int i = 0; i < sort.get("sort1").size(); i++) {
-            if(sort.get("sort1").get(i).suit.getSuitOrder() != sort.get("sort2").get(i).suit.getSuitOrder()) return false;
+    public static boolean sameSuits(List<List<Card>> cards) {
+        int listSize = cards.getFirst().size();
+
+        // 1. Make sure all sublists are the same size
+        if (!cards.stream().allMatch(list -> list.size() == listSize)) return false;
+
+        // 2. For each index/column, check if all suits match
+        for (int i = 0; i < listSize; i++) {
+            Suit suit = cards.getFirst().get(i).getSuit(); // take suit from the first row
+            for (int j = 1; j < cards.size(); j++) {
+                if (cards.get(j).get(i).getSuit() != suit) return false;
+            }
         }
+
         return true;
     }
+
 
 
     /**
@@ -73,25 +68,22 @@ public class Card {
      * @param cards2 Current cards on field
      * @return true if your card2 bigger than field cards
      */
-    public static boolean isBigger(List<Card> cards1, List<Card> cards2) {
-
-        Map<String, List<Card>> sort = sortCards(Arrays.asList(cards1, cards2));
-
-        for(int i = 0; i < sort.get("sort1").size(); i++) {
-            if(compareRank(sort.get("sort1").get(i).rank, sort.get("sort2").get(i).rank) <= 0){
-                System.out.println("Card chose smaller than field.\nPlease choose others or pass turn!");
-                return false;
+    public static boolean isBigger(List<Card> cards1, List<Card> cards2) { // 2 set of cards has been checked for same suit before
+        if(quadCombo(cards2)) {
+            if(!quadCombo(cards1)) return false;
+            else {
+                return cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
             }
-        }
+        } else if(quadCombo(cards1)) return true;
 
         if(doubleCombo(cards1) && doubleCombo(cards2)) {
-            return compareRank(cards1.getFirst().rank, cards2.getFirst().rank) > 0;
+            return cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
         }
         if(tripleCombo(cards1) && tripleCombo(cards2)) {
             return cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
         }
-
-        return true;
+        if(straight(cards2) && !straight(cards1)) return false;
+        return cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
     }
 
     public static boolean doubleCombo(List<Card> cards) {
@@ -104,13 +96,18 @@ public class Card {
                 cards.get(1).rank.getRankOrder() == cards.get(2).rank.getRankOrder();
     }
 
+    public static boolean quadCombo(List<Card> cards) {
+        int rankCombo = cards.getFirst().rank.getRankOrder();
+        return cards.stream().allMatch(card -> card.getRank().getRankOrder() == rankCombo);
+    }
+
     public static boolean straight(List<Card> cards) {
         Suit suitCombo = cards.getFirst().suit;
         for(int i = 1; i < cards.size(); i++) {
             if(!cards.get(i).suit.equals(suitCombo)) return false;
         }
 
-        List<Card> sorted = sortCard(cards);
+        List<Card> sorted = sortCardRank(cards);
         int prevRank = sorted.getFirst().rank.getRankOrder();
         for(int i = 1; i < sorted.size(); i++) {
             if(sorted.get(i).rank.getRankOrder() - prevRank != 1) return false;
