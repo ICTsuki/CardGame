@@ -61,7 +61,8 @@ public class ThreeCards extends Game{
                     player.getHand().get(2).getRank().getValue();
 
             Map<String, Integer> playerMap = new HashMap<>();
-            playerMap.put(player.getName(), sum % 10);
+            if(sum % 10 == 0) playerMap.put(player.getName(), 10);
+            else playerMap.put(player.getName(), sum % 10);
             scoreLeaderBoard.add(playerMap);
 
         }

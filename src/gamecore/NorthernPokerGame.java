@@ -1,6 +1,8 @@
 package gamecore;
 
+import gameenum.Rank;
 import gameenum.Status;
+import gameenum.Suit;
 import nonsystem.Card;
 import nonsystem.Player;
 
@@ -10,6 +12,7 @@ import java.util.Objects;
 
 public class NorthernPokerGame extends Game{
     public static final List<ArrayList<Card>> PokerField = new ArrayList<>();
+    public final Card firstPlayCard = new Card(Suit.SPADE, Rank.THREE);
 
     public NorthernPokerGame() {
         super();
@@ -20,6 +23,7 @@ public class NorthernPokerGame extends Game{
             Objects.requireNonNull(current).receiveCard(deck.dealCard());
             players.add(current);
         }
+
     }
 
     public void startGame(){
