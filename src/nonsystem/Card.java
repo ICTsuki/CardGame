@@ -16,6 +16,18 @@ public class Card {
         if(suit.equals(Suit.HEART) || suit.equals(Suit.DIAMOND)) color = "RED";
         else color = "BLACK";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Card card = (Card) obj;
+        return this.rank.getRankOrder() == card.rank.getRankOrder()
+                && this.suit.getSuitOrder() == card.suit.getSuitOrder();
+    }
+
     public Suit getSuit() {
         return suit;
     }

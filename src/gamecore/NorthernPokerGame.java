@@ -23,6 +23,9 @@ public class NorthernPokerGame extends Game{
             Objects.requireNonNull(current).receiveCard(deck.dealCard());
             players.add(current);
         }
+        Player found = players.stream()
+                        .filter(player -> player.getHand().contains(firstPlayCard))
+                        .findFirst().orElse(null);
 
     }
 
