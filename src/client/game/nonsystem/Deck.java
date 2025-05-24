@@ -1,7 +1,7 @@
-package client.model.nonsystem;
+package client.game.nonsystem;
 
 import java.util.*;
-import client.model.gameenum.*;
+import client.game.gameenum.*;
 
 public class Deck {
     private final List<Card> cards;

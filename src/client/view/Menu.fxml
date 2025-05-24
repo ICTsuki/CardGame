@@ -17,8 +17,8 @@
                <Font size="30.0" />
             </font>
          </Label> 
-            <Button fx:id="button" alignment="CENTER" onAction="#ButtonHandleClick" text="Three Card" />
-            <Button fx:id="button2" onAction="#Button2HandleClick" text="Northern Poker" />
+            <Button alignment="CENTER" onAction="#ThreeCardButtonClick" text="Three Card" />
+            <Button alignment="CENTER" onAction="#NorthernPokerButtonClick" text="Northern Poker" />
         </VBox>
     </center>
    <top>

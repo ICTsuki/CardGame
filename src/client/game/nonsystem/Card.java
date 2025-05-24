@@ -1,7 +1,7 @@
-package client.model.nonsystem;
+package client.game.nonsystem;
 
-import client.model.gameenum.Rank;
-import client.model.gameenum.Suit;
+import client.game.gameenum.Rank;
+import client.game.gameenum.Suit;
 import java.util.*;
 import java.util.stream.Collectors;
 

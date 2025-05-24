@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Load the FXML file
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/Menu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/client/view/Menu.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 640, 480);
 
         // Configure the stage
@@ -21,7 +21,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
 

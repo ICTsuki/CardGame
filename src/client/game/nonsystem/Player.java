@@ -1,6 +1,6 @@
-package client.model.nonsystem;
+package client.game.nonsystem;
 
-import client.model.gamecore.Game;
+import client.game.gamecore.Game;
 
 public class Player extends Participant {
 

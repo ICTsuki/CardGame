@@ -1,4 +1,4 @@
-package client.model.gameenum;
+package client.game.gameenum;
 
 public enum Rank {
     THREE(1), FOUR(2), FIVE(3), SIX(4), SEVEN(5), EIGHT(6),

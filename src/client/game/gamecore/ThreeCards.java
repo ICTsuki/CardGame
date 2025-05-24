@@ -1,6 +1,6 @@
-package client.model.gamecore;
+package client.game.gamecore;
 
-import client.model.nonsystem.Player;
+import client.game.nonsystem.Player;
 
 import java.util.*;
 
