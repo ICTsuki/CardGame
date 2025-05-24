@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         // Load the FXML file
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/client/view/Menu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 640, 480);
+        Scene scene = new Scene(fxmlLoader.load());
 
         // Configure the stage
         stage.setTitle("Sample");

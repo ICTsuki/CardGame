@@ -9,6 +9,9 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="client.controller.ThreeCardController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@../resource/styles/globals.css, @../resource/styles/game.css">
+
+    <Button layoutX="147.0" layoutY="74.0" mnemonicParsing="false" onAction="#quitButtonClick" text="Quit" />
 
 </BorderPane>

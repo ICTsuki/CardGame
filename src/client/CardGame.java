@@ -1,15 +1,15 @@
 package client;
 
 import client.game.gamecore.NorthernPokerGame;
-import client.game.nonsystem.NorthenPokerPlayer;
+import client.game.nonsystem.NorthernPokerPlayer;
 
 
 public class CardGame {
     public static void main(String[] args) {
-        NorthenPokerPlayer player1 = new NorthenPokerPlayer("Bao");
-        NorthenPokerPlayer player2 = new NorthenPokerPlayer("A Duc");
-        NorthenPokerPlayer player3 = new NorthenPokerPlayer("Hung");
-        NorthenPokerPlayer player4 = new NorthenPokerPlayer("Khoa");
+        NorthernPokerPlayer player1 = new NorthernPokerPlayer("Bao");
+        NorthernPokerPlayer player2 = new NorthernPokerPlayer("A Duc");
+        NorthernPokerPlayer player3 = new NorthernPokerPlayer("Hung");
+        NorthernPokerPlayer player4 = new NorthernPokerPlayer("Khoa");
 
         NorthernPokerGame game = new NorthernPokerGame();
         player2.joinGame(game);

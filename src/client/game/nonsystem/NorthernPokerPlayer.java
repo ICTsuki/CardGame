@@ -15,15 +15,15 @@ import java.io.IOException;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-public class NorthenPokerPlayer extends Player {
+public class NorthernPokerPlayer extends Player {
     private final Scanner scanner = new Scanner(System.in);
-    private static final Logger LOGGER = Logger.getLogger(NorthenPokerPlayer.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(NorthernPokerPlayer.class.getName());
 
-    public NorthenPokerPlayer() {
+    public NorthernPokerPlayer() {
         super();
     }
 
-    public NorthenPokerPlayer(String name) {
+    public NorthernPokerPlayer(String name) {
         super(name);
     }
 

@@ -35,7 +35,7 @@
                   <Font name="Calibri" size="15.0" />
                </font>
                </Label>
-            <TextField prefHeight="58.0" prefWidth="263.0" promptText="Player Name" />
+            <TextField fx:id="playerNameField" prefHeight="58.0" prefWidth="263.0" promptText="Enter Your Name" onAction="#TextNameEnter"/>
            </HBox>
        </VBox>
    </top>
