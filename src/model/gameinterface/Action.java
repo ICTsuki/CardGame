@@ -1,6 +1,6 @@
-package gameinterface;
+package model.gameinterface;
 
-import gamecore.Game;
+import model.gamecore.Game;
 
 public interface Action {
     void joinGame(Game game);

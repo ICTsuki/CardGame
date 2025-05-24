@@ -1,6 +1,6 @@
-package gamecore;
+package model.gamecore;
 
-import nonsystem.Player;
+import model.nonsystem.Player;
 
 import java.util.*;
 

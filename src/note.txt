@@ -1,0 +1,14 @@
+Project structure
+
+
+/src
+  /view          <-- All your FXML files
+    - main_menu.fxml
+    - game_screen.fxml
+  /controller    <-- Controllers that match FXML
+    - MainMenuController.java
+    - GameController.java
+  /model         <-- Game logic (like Deck, Player, AI)
+    - Card.java
+    - GameEngine.java
+  Main.java      <-- The app launcher

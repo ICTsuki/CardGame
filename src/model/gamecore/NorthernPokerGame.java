@@ -1,10 +1,10 @@
-package gamecore;
+package model.gamecore;
 
-import gameenum.Rank;
-import gameenum.Status;
-import gameenum.Suit;
-import nonsystem.Card;
-import nonsystem.Player;
+import model.gameenum.Rank;
+import model.gameenum.Status;
+import model.gameenum.Suit;
+import model.nonsystem.Card;
+import model.nonsystem.Player;
 
 import java.util.ArrayList;
 import java.util.List;

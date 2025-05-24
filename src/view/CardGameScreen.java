@@ -1,6 +1,4 @@
-package gui;
-
-
+package view;
 
 public class CardGameScreen {
 }

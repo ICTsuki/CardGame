@@ -1,5 +1,5 @@
-import gamecore.NorthernPokerGame;
-import nonsystem.NorthenPokerPlayer;
+import model.gamecore.NorthernPokerGame;
+import model.nonsystem.NorthenPokerPlayer;
 
 
 public class CardGame {

@@ -1,6 +1,6 @@
-package nonsystem;
+package model.nonsystem;
 
-import gamecore.Game;
+import model.gamecore.Game;
 
 public class Player extends Participant {
 
