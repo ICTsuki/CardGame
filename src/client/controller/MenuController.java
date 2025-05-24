@@ -1,6 +1,5 @@
 package client.controller;
 
-import client.ThreeCardGame;
 import client.game.gamecore.NorthernPokerGame;
 import client.game.gamecore.ThreeCards;
 import client.game.nonsystem.NorthernPokerPlayer;
@@ -47,7 +46,7 @@ public class MenuController {
         }
 
         Player player = new Player(playerName);
-        ThreeCards game = new ThreeCards();
+        ThreeCards game = ThreeCards.getInstance();
         player.joinGame(game);
 
         // Use a named FXMLLoader so we can access the controller
@@ -70,7 +69,7 @@ public class MenuController {
         }
 
         NorthernPokerPlayer player = new NorthernPokerPlayer(playerName);
-        NorthernPokerGame game = new NorthernPokerGame();
+        NorthernPokerGame game = NorthernPokerGame.getInstance();
         player.joinGame(game);
 
         // Use a named FXMLLoader so we can access the controller

@@ -22,6 +22,10 @@ public class NorthernPokerController {
         playerName.setText(name);
     }
 
+    public void startGameButtonClick(ActionEvent event) throws IOException {
+
+    }
+
     public void quitButtonClick(ActionEvent event) throws IOException {
         // Use a named FXMLLoader so we can access the controller
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/view/Menu.fxml"));

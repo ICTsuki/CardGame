@@ -11,7 +11,7 @@ public class CardGame {
         NorthernPokerPlayer player3 = new NorthernPokerPlayer("Hung");
         NorthernPokerPlayer player4 = new NorthernPokerPlayer("Khoa");
 
-        NorthernPokerGame game = new NorthernPokerGame();
+        NorthernPokerGame game = NorthernPokerGame.getInstance();
         player2.joinGame(game);
         player1.joinGame(game);
         player3.joinGame(game);

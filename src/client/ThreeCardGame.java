@@ -11,7 +11,7 @@ public class ThreeCardGame {
         Player player4 = new Player("Duong");
         Player player5 = new Player("Khoa");
 
-        ThreeCards game = new ThreeCards();
+        ThreeCards game = ThreeCards.getInstance();
         player1.joinGame(game);
         player2.joinGame(game);
         player3.joinGame(game);

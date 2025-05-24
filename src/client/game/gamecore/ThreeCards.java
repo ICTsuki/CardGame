@@ -5,10 +5,19 @@ import client.game.nonsystem.Player;
 import java.util.*;
 
 public class ThreeCards extends Game{
+    private static ThreeCards instance;
+
     List<Map<String, Integer>> scoreLeaderBoard = new ArrayList<>();
 
-    public ThreeCards() {
+    private ThreeCards() {
         super();
+    }
+
+    public static ThreeCards getInstance() {
+        if(instance == null) {
+            instance = new ThreeCards();
+        }
+        return instance;
     }
 
     @Override

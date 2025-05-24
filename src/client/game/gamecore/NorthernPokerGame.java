@@ -11,12 +11,25 @@ import java.util.List;
 import java.util.Objects;
 
 public class NorthernPokerGame extends Game{
+    private static NorthernPokerGame instance;
+
+
     public static final List<ArrayList<Card>> PokerField = new ArrayList<>();
     public final Card firstPlayCard = new Card(Suit.SPADE, Rank.THREE);
 
-    public NorthernPokerGame() {
+    private NorthernPokerGame() {
         super();
     }
+
+    public static NorthernPokerGame getInstance() {
+        if(instance == null) {
+            instance = new NorthernPokerGame();
+        }
+        return instance;
+    }
+
+
+
     public void deal() {
         while(deck.remainingCards() != 52 - players.size()*13 && !players.isEmpty()) {
             Player current = players.poll();
