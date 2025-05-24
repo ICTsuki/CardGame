@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NorthernPokerController">
+    <!-- Player Hand -->
+    <bottom><HBox fx:id="playerHand" /></bottom>
+
+    <!-- Opponent Hand -->
+    <top><HBox fx:id="opponent1Hand" /></top>
+    <left><HBox fx:id="opponent2Hand" /></left>
+    <right><HBox fx:id="opponent3Hand" /></right>
+   <padding>
+      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+   </padding>
+</BorderPane>

@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,31 +16,18 @@ import javafx.stage.StageStyle;
 
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
+
 public class Main extends Application {
     @Override
-    public void start(Stage stage) {
-        stage.initStyle(StageStyle.DECORATED);
-        BorderPane root = new BorderPane();
-        Button poker = new Button("Vietnamese Northern Poker");
-        Button threeCard = new Button("Three Cards Game");
+    public void start(Stage stage) throws IOException {
+        // Load the FXML file
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/Menu.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 640, 480);
 
-        poker.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent arg0) {
-            }
-        });
-
-        HBox hbox = new HBox(5, poker, threeCard);
-        hbox.setAlignment(Pos.CENTER);
-        hbox.setPadding(new Insets(10));
-
-
-        root.setCenter(hbox);
-
-        Scene scene = new Scene(root, 300, 200);
-
+        // Configure the stage
+        stage.setTitle("Sample");
         stage.setScene(scene);
-        stage.setTitle("Card Kingdom");
         stage.show();
     }
 
