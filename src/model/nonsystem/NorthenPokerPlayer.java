@@ -1,8 +1,8 @@
-package nonsystem;
+package model.nonsystem;
 
-import gamecore.NorthernPokerGame;
-import gameenum.Status;
-import gameinterface.Action;
+import model.gamecore.NorthernPokerGame;
+import model.gameenum.Status;
+import model.gameinterface.Action;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -135,12 +135,12 @@ public class NorthenPokerPlayer extends Player {
             scanner.nextLine();
 
             if (t == 0) {
-                File file = new File("src/gamerule/Northern Poker/Rule - VietNamese.txt");
+                File file = new File("src/model/gamerule/Northern Poker/Rule - VietNamese.txt");
                 System.out.println("Absolute path: " + file.getAbsolutePath());
                 openTextFile(file);
                 break;
             } else if (t == 1) {
-                File file = new File("src/gamerule/Northern Poker/Rule - English.txt");
+                File file = new File("src/model/gamerule/Northern Poker/Rule - English.txt");
                 openTextFile(file);
                 break;
             } else {

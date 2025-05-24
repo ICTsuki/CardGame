@@ -1,5 +1,5 @@
-import gamecore.ThreeCards;
-import nonsystem.Player;
+import model.gamecore.ThreeCards;
+import model.nonsystem.Player;
 
 public class ThreeCardGame {
     public static void main(String[] args) {

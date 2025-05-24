@@ -1,8 +1,8 @@
-package nonsystem;
+package model.nonsystem;
 
-import gamecore.Game;
-import gameenum.Status;
-import gameinterface.Action;
+import model.gamecore.Game;
+import model.gameenum.Status;
+import model.gameinterface.Action;
 
 import java.util.ArrayList;
 import java.util.List;
