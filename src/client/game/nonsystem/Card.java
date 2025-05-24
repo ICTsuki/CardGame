@@ -9,12 +9,17 @@ public class Card {
     private final Suit suit;
     private final Rank rank;
     private final String color;
+    public static final String BACK_IMAGE_PATH = "/client/resource/image/card/backs/back3.png";
+    private String frontImagePath;
 
     public Card(Suit suit, Rank rank) {
         this.suit= suit;
         this.rank = rank;
         if(suit.equals(Suit.HEART) || suit.equals(Suit.DIAMOND)) color = "RED";
         else color = "BLACK";
+        if(suit.equals(Suit.CLUB)) {
+            this.frontImagePath = "/client/resource/image/card/clubs/C" + rank.getValue() + ".png";
+        }
     }
 
     @Override
