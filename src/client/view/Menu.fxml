@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="680.0" prefWidth="900.0" stylesheets="@../resource/styles/globals.css, @../resource/styles/menu.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+<BorderPane prefHeight="680.0" prefWidth="900.0" stylesheets="@../resource/styles/globals.css, @../resource/styles/menu.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.MenuController">
     <center>
         <VBox alignment="CENTER" prefWidth="640.0" BorderPane.alignment="CENTER">
          <Label alignment="CENTER" text="WELLCOME TO CARD KINGDOM CHOOSE YOUR CARD GAME" textAlignment="JUSTIFY">
@@ -27,12 +27,12 @@
                <VBox.margin>
                    <Insets />
                </VBox.margin>
-               <Label prefHeight="72.5" prefWidth="82.0" text="Name:">
+               <Label prefHeight="72.8" prefWidth="97.0" text="Name:">
                    <padding>
                        <Insets left="2.0" />
                    </padding>
                <font>
-                  <Font name="Calibri" size="12.0" />
+                  <Font name="Calibri" size="15.0" />
                </font>
                </Label>
             <TextField prefHeight="58.0" prefWidth="263.0" promptText="Player Name" />

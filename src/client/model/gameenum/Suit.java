@@ -1,4 +1,4 @@
-package model.gameenum;
+package client.model.gameenum;
 
 public enum Suit {
     HEART(4), SPADE(1), CLUB(2), DIAMOND(3);

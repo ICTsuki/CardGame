@@ -1,5 +1,7 @@
-import model.gamecore.NorthernPokerGame;
-import model.nonsystem.NorthenPokerPlayer;
+package client;
+
+import client.model.gamecore.NorthernPokerGame;
+import client.model.nonsystem.NorthenPokerPlayer;
 
 
 public class CardGame {

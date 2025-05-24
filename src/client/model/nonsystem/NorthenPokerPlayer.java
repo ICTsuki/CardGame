@@ -1,8 +1,8 @@
-package model.nonsystem;
+package client.model.nonsystem;
 
-import model.gamecore.NorthernPokerGame;
-import model.gameenum.Status;
-import model.gameinterface.Action;
+import client.model.gamecore.NorthernPokerGame;
+import client.model.gameenum.Status;
+import client.model.gameinterface.Action;
 
 import java.util.ArrayList;
 import java.util.Arrays;

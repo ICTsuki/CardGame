@@ -1,5 +1,7 @@
-import model.gamecore.ThreeCards;
-import model.nonsystem.Player;
+package client;
+
+import client.model.gamecore.ThreeCards;
+import client.model.nonsystem.Player;
 
 public class ThreeCardGame {
     public static void main(String[] args) {
