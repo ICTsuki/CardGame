@@ -1,5 +1,7 @@
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -11,6 +13,8 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javafx.scene.input.MouseEvent;
+
 public class Main extends Application {
     @Override
     public void start(Stage stage) {
@@ -18,6 +22,12 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
         Button poker = new Button("Vietnamese Northern Poker");
         Button threeCard = new Button("Three Cards Game");
+
+        poker.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent arg0) {
+            }
+        });
 
         HBox hbox = new HBox(5, poker, threeCard);
         hbox.setAlignment(Pos.CENTER);
