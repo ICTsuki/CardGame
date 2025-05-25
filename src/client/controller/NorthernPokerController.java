@@ -22,7 +22,15 @@ public class NorthernPokerController {
     }
 
     public void startGameButtonClick(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/view/StartedNorthernPoker.fxml"));
+        Parent root = loader.load();
 
+        PokerGameController controller = loader.getController();
+        controller.setPlayerName(playerName.getText());
+
+        // Switch scene
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(new Scene(root));
     }
 
     public void quitButtonClick(ActionEvent event) throws IOException {
