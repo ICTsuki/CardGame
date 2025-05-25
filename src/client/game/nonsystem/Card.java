@@ -9,12 +9,24 @@ public class Card {
     private final Suit suit;
     private final Rank rank;
     private final String color;
+    public static final String BACK_IMAGE_PATH = "/client/resource/image/card/backs/Back3.png";
+    private final String frontImagePath;
 
     public Card(Suit suit, Rank rank) {
         this.suit= suit;
         this.rank = rank;
         if(suit.equals(Suit.HEART) || suit.equals(Suit.DIAMOND)) color = "RED";
         else color = "BLACK";
+
+        if(suit.equals(Suit.CLUB)) {
+            this.frontImagePath = "/client/resource/image/card/clubs/C" + rank.getValue() + ".png";
+        } else if(suit.equals(Suit.SPADE)) {
+            this.frontImagePath = "/client/resource/image/card/spades/S" + rank.getValue() + ".png";
+        }else if (suit.equals(Suit.DIAMOND)) {
+            this.frontImagePath = "/client/resource/image/card/diamonds/D" + rank.getValue() + ".png";
+        }else {
+            this.frontImagePath = "/client/resource/image/card/hearts/H" + rank.getValue() + ".png";
+        }
     }
 
     @Override
@@ -34,6 +46,10 @@ public class Card {
 
     public Rank getRank() {
         return rank;
+    }
+
+    public String getFrontImagePath() {
+        return frontImagePath;
     }
 
     @Override

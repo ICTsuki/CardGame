@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,7 +22,15 @@ public class NorthernPokerController {
     }
 
     public void startGameButtonClick(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/view/StartedNorthernPoker.fxml"));
+        Parent root = loader.load();
 
+        PokerGameController controller = loader.getController();
+        controller.setPlayerName(playerName.getText());
+
+        // Switch scene
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(new Scene(root));
     }
 
     public void quitButtonClick(ActionEvent event) throws IOException {

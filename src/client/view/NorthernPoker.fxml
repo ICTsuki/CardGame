@@ -20,19 +20,16 @@
            </VBox>
 
            <HBox prefHeight="111.0" prefWidth="382.0" />
-         <AnchorPane prefHeight="200.0" prefWidth="200.0">
-            <children>
-               <Button layoutX="147.0" layoutY="74.0" mnemonicParsing="false" onAction="#quitButtonClick" text="Quit" />
-            </children>
-         </AnchorPane>
+           <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <Button layoutX="147.0" layoutY="74.0" mnemonicParsing="false" onAction="#quitButtonClick" text="Quit"/>
+           </AnchorPane>
        </HBox>
    </bottom>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button layoutX="184.0" layoutY="134.0" mnemonicParsing="false" onAction="#startGameButtonClick" text="Start Game" />
-         </children>
-      </AnchorPane>
+       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+           <Button layoutX="184.0" layoutY="134.0" mnemonicParsing="false" onAction="#startGameButtonClick"
+                   text="Start Game"/>
+       </AnchorPane>
    </center>
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />

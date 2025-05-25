@@ -8,7 +8,7 @@ public abstract class Game {
     public static final Queue<Player> players = new LinkedList<>();
     public static Player previousPlayer;
     public static final int MAXPLAYER = 4;
-    protected final Deck deck;
+    protected Deck deck;
 
     public Game() {
         super();
@@ -20,4 +20,8 @@ public abstract class Game {
     public abstract void deal();
 
     public abstract void startGame();
+
+    public Deck getDeck() {
+        return deck;
+    }
 }
