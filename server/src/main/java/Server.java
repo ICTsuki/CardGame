@@ -13,7 +13,7 @@ import javafx.application.Platform;
 
 public class Server {
 
-    ArrayList<ClientThread> clients = new ArrayList<>();
+    final ArrayList<ClientThread> clients = new ArrayList<>();
     TheServer server;
     boolean isRunning = true;
     ServerSocket serverSocket;
@@ -61,9 +61,7 @@ public class Server {
                 }
             }
             clients.clear();
-            Platform.runLater(() -> {
-                ServerInfo.getServerController().getEventList().getItems().add("CLOSED ALL CURRENT CLIENT CONNECTIONS");
-            });
+            Platform.runLater(() -> ServerInfo.getServerController().getEventList().getItems().add("CLOSED ALL CURRENT CLIENT CONNECTIONS"));
         }
     }
 
@@ -80,7 +78,7 @@ public class Server {
     public class TheServer extends Thread {
         @Override
         public void run() {
-            try (ServerSocket socket = new ServerSocket(ServerInfo.getPort());) {
+            try (ServerSocket socket = new ServerSocket(ServerInfo.getPort())) {
                 serverSocket = socket; // update member in 'Server' class
 
                 // continuously accepts new connections and adds them to client list while server is running
@@ -109,9 +107,7 @@ public class Server {
             } catch (IOException e) {
                 System.err.println("Error with ServerSocket: " + e.getMessage());
             } finally {
-                Platform.runLater(() -> {
-                    ServerInfo.getServerController().getEventList().getItems().add("SERVER CLOSED");
-                });
+                Platform.runLater(() -> ServerInfo.getServerController().getEventList().getItems().add("SERVER CLOSED"));
             }
         }//end of while
     }

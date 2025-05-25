@@ -1,5 +1,5 @@
-import game.gamecore.NorthernPokerGame;
-import game.nonsystem.NorthernPokerPlayer;
+import main.java.game.gamecore.NorthernPokerGame;
+import main.java.game.nonsystem.NorthernPokerPlayer;
 
 
 public class CardGame {

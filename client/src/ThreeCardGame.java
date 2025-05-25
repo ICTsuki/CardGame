@@ -1,5 +1,5 @@
-import game.gamecore.ThreeCards;
-import game.nonsystem.Player;
+import main.java.game.gamecore.ThreeCards;
+import main.java.game.nonsystem.Player;
 
 public class ThreeCardGame {
     public static void main(String[] args) {
