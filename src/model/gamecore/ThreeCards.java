@@ -55,6 +55,9 @@ public class ThreeCards extends Game{
         deal();
 
         for(Player player : players) {
+            System.out.println(player.getName()+": ");
+            player.showCardOnHand();
+            System.out.println();
             int sum = 0;
             sum += player.getHand().get(0).getRank().getValue() +
                     player.getHand().get(1).getRank().getValue() +
