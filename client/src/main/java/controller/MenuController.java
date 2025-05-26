@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 
 import java.io.IOException;
-import java.net.Socket;
+
 
 
 public class MenuController {
@@ -40,17 +40,6 @@ public class MenuController {
     }
 
 
-    private void PopupNameWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resource/fxml/PopupName.fxml"));
-        VBox popupContent = loader.load();
-
-        Stage popupStage = new Stage();
-        popupStage.initOwner(null);
-        popupStage.setTitle("Popup Window");
-        popupStage.setScene(new Scene(popupContent, 200, 100));
-        popupStage.show();
-    }
-
     public void ThreeCardButtonClick(ActionEvent event) throws IOException {
         if(playerCount < 2) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "You need at least 2 players to start the game.");
@@ -60,7 +49,7 @@ public class MenuController {
             return;
         }
 
-        Player player = new Player(playerName);
+        Player player = new Player(playerName1);
         ThreeCards game = ThreeCards.getInstance();
         player.joinGame(game);
 
@@ -70,7 +59,18 @@ public class MenuController {
 
         // Now you can get the controller
         NorthernPokerController controller = loader.getController();
-        controller.setPlayerName(playerName); // make sure you have this method in your controller
+        if(playerName1 != null && !playerName1.isEmpty()) {
+            controller.placePlayer(0, playerName1);
+        }
+        if(playerName2 != null && !playerName2.isEmpty()) {
+            controller.placePlayer(1, playerName2);
+        }
+        if(playerName3 != null && !playerName3.isEmpty()) {
+            controller.placePlayer(2, playerName3);
+        }
+        if(playerName4 != null && !playerName4.isEmpty()) {
+            controller.placePlayer(3, playerName4);
+        }
 
         // Switch scene
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -91,7 +91,19 @@ public class MenuController {
         Parent root = loader.load();
 
         NorthernPokerController controller = loader.getController();
-        if()
+        if(playerName1 != null && !playerName1.isEmpty()) {
+            controller.placePlayer(0, playerName1);
+        }
+        if(playerName2 != null && !playerName2.isEmpty()) {
+            controller.placePlayer(1, playerName2);
+        }
+        if(playerName3 != null && !playerName3.isEmpty()) {
+            controller.placePlayer(2, playerName3);
+        }
+        if(playerName4 != null && !playerName4.isEmpty()) {
+            controller.placePlayer(3, playerName4);
+        }
+
 
 
         // Switch scene

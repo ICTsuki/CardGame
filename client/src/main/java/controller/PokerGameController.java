@@ -1,5 +1,6 @@
 package main.java.controller;
 
+import javafx.scene.layout.VBox;
 import main.java.game.gamecore.NorthernPokerGame;
 import main.java.game.nonsystem.Card;
 import main.java.game.nonsystem.CardView;
@@ -31,6 +32,9 @@ public class PokerGameController implements Initializable {
 
     @FXML
     private Pane cardPane;
+
+    @FXML
+    private VBox topPlayerBox, leftPlayerBox, rightPlayerBox, bottomPlayerBox;
 
     private final List<ImageView> cardsBack = new ArrayList<>();
     private final List<ImageView> cardsFront = new ArrayList<>();

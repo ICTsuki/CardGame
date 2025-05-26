@@ -23,9 +23,7 @@ public class NorthernPokerController {
     @FXML
     private VBox topPlayerBox, leftPlayerBox, rightPlayerBox, bottomPlayerBox;
 
-
-    @FXML
-    private Label playerName;
+    private String playerName1, playerName2, playerName3, playerName4;
 
     @FXML
     public void initialize() {
@@ -37,17 +35,24 @@ public class NorthernPokerController {
 
     private final Map<Integer, VBox> seatMap = new HashMap<>();
 
-    public void setPlayerName(String name) {
-        playerName.setText(name);
-    }
-
     public void startGameButtonClick(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resource/fxml/StartedNorthernPoker.fxml"));
         Parent root = loader.load();
 
         PokerGameController controller = loader.getController();
-        controller.setPlayerName(playerName.getText());
+        if(playerName1 != null && !playerName1.isEmpty()) {
+            placePlayer(0, playerName1);
+        }
+        if(playerName2 != null && !playerName2.isEmpty()) {
+            placePlayer(1, playerName2);
+        }
+        if(playerName3 != null && !playerName3.isEmpty()) {
+            placePlayer(2, playerName3);
+        }
+        if(playerName4 != null && !playerName4.isEmpty()) {
+            placePlayer(3, playerName4);
+        }
 
         // Switch scene
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
