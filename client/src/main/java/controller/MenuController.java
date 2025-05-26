@@ -1,4 +1,6 @@
 package main.java.controller;
+import main.java.util.AudioManager;
+
 
 import main.java.game.gamecore.ThreeCards;
 import main.java.game.nonsystem.Player;
@@ -112,6 +114,23 @@ public class MenuController {
         // Switch scene
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(new Scene(root));
+    }
+    @FXML private ToggleButton musicToggleButton;
+
+    @FXML
+    public void initialize() {
+        musicToggleButton.setSelected(AudioManager.getInstance().isPlaying());
+        updateButtonText();
+    }
+
+    @FXML
+    public void toggleMusic() {
+        AudioManager.getInstance().toggle();
+        updateButtonText();
+    }
+
+    private void updateButtonText() {
+        musicToggleButton.setText(AudioManager.getInstance().isPlaying() ? "Pause Music" : "Play Music");
     }
 
 }
