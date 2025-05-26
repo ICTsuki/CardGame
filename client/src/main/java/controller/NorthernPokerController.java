@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.VBox;
@@ -31,6 +30,19 @@ public class NorthernPokerController {
         seatMap.put(1, leftPlayerBox);
         seatMap.put(2, topPlayerBox);
         seatMap.put(3, rightPlayerBox);
+    }
+
+    public void setPlayerName1(String name) {
+        playerName1 = name;
+    }
+    public void setPlayerName2(String name) {
+        playerName2 = name;
+    }
+    public void setPlayerName3(String name) {
+        playerName3 = name;
+    }
+    public void setPlayerName4(String name) {
+        playerName4 = name;
     }
 
     private final Map<Integer, VBox> seatMap = new HashMap<>();
