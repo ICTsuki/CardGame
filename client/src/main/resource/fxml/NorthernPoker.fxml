@@ -9,35 +9,53 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="480.0" prefWidth="640.0" stylesheets="@../styles/globals.css, @../styles/game.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.NorthernPokerController">
-   <bottom>
-       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-           <VBox alignment="CENTER" spacing="5">
-               <Label fx:id="playerName" style="-fx-font-size: 14px; -fx-background-color: #fdf6e3; -fx-padding: 4px;" text="Hung" wrapText="true" />
-               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                   <Image url="@../image/player/playerimage.png" />
-               </ImageView>
-           </VBox>
+<BorderPane prefHeight="480.0" prefWidth="640.0"
+            stylesheets="@../styles/globals.css, @../styles/game.css"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="main.java.controller.NorthernPokerController">
 
-           <HBox prefHeight="111.0" prefWidth="382.0" />
-           <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <Button layoutX="147.0" layoutY="74.0" mnemonicParsing="false" onAction="#quitButtonClick" text="Quit"/>
-           </AnchorPane>
-       </HBox>
-   </bottom>
-   <center>
-       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-           <Button layoutX="184.0" layoutY="134.0" mnemonicParsing="false" onAction="#startGameButtonClick"
-                   text="Start Game"/>
-       </AnchorPane>
-   </center>
-   <top>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </top>
-   <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-   </right>
+    <!-- TOP: Opponent seat -->
+    <top>
+        <VBox fx:id="topPlayerBox" alignment="CENTER" spacing="5" BorderPane.alignment="CENTER" prefHeight="100.0">
+            <!-- Top player will be added here dynamically -->
+        </VBox>
+    </top>
+
+    <!-- LEFT: Opponent seat -->
+    <left>
+        <VBox fx:id="leftPlayerBox" alignment="CENTER" spacing="5" BorderPane.alignment="CENTER" prefWidth="100.0">
+            <!-- Left player will be added here dynamically -->
+        </VBox>
+    </left>
+
+    <!-- RIGHT: Opponent seat -->
+    <right>
+        <VBox fx:id="rightPlayerBox" alignment="CENTER" spacing="5" BorderPane.alignment="CENTER" prefWidth="100.0">
+            <!-- Right player will be added here dynamically -->
+        </VBox>
+    </right>
+
+    <!-- CENTER: Start button -->
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <Button layoutX="184.0" layoutY="134.0" mnemonicParsing="false"
+                    onAction="#startGameButtonClick" text="Start Game"/>
+        </AnchorPane>
+    </center>
+
+    <!-- BOTTOM: YOU (the local player) -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="20" prefHeight="100.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="bottomPlayerBox" alignment="CENTER" spacing="5" BorderPane.alignment="CENTER" prefWidth="100.0">
+                <!-- Local player will be added here dynamically -->
+            </VBox>
+
+            <!-- Spacer + Quit -->
+            <HBox prefWidth="200.0" />
+            <AnchorPane prefWidth="200.0">
+                <Button layoutX="147.0" layoutY="30.0" mnemonicParsing="false" onAction="#quitButtonClick" text="Quit"/>
+            </AnchorPane>
+        </HBox>
+    </bottom>
 </BorderPane>

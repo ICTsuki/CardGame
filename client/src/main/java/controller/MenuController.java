@@ -1,5 +1,7 @@
 package main.java.controller;
 
+import main.java.PokerClient;
+import main.java.Server;
 import main.java.game.gamecore.NorthernPokerGame;
 import main.java.game.gamecore.ThreeCards;
 import main.java.game.nonsystem.NorthernPokerPlayer;
@@ -7,15 +9,14 @@ import main.java.game.nonsystem.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 
 import java.io.IOException;
+import java.net.Socket;
 
 
 public class MenuController {
@@ -67,10 +68,13 @@ public class MenuController {
             PopupNameWindow();
             return;
         }
+        Server server = Server.getInstance();
+        if(server.getServerCount() == 0) {
+            server.start(1234);
+        }
 
-        NorthernPokerPlayer player = new NorthernPokerPlayer(playerName);
-        NorthernPokerGame game = NorthernPokerGame.getInstance();
-        player.joinGame(game);
+        Socket socket = new Socket("localhost", 1234);
+        PokerClient pokerClient = new PokerClient(socket, playerName);
 
         // Use a named FXMLLoader so we can access the controller
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resource/fxml/NorthernPoker.fxml"));
@@ -78,7 +82,8 @@ public class MenuController {
 
         // Now you can get the controller
         NorthernPokerController controller = loader.getController();
-        controller.setPlayerName(playerName); // make sure you have this method in your controller
+        controller.setPlayerName(playerName);
+        controller.placePlayer(0, playerName);
 
         // Switch scene
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
