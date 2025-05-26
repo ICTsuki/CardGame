@@ -13,7 +13,7 @@ public class ThreeCardController {
 
     public void quitButtonClick(ActionEvent event) throws IOException {
         // Use a named FXMLLoader so we can access the controller
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resource/fxml/Menu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/Menu.fxml"));
         Parent root = loader.load();
 
         // Switch scene

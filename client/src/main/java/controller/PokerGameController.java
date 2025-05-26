@@ -1,126 +1,84 @@
 package main.java.controller;
 
-import javafx.scene.layout.VBox;
-import main.java.game.gamecore.NorthernPokerGame;
-import main.java.game.nonsystem.Card;
-import main.java.game.nonsystem.CardView;
-import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
-public class PokerGameController implements Initializable {
+public class PokerGameController {
 
-    List<CardView> cardViews = new ArrayList<>();
+    @FXML private Label topPlayerName, leftPlayerName, rightPlayerName, bottomPlayerName;
 
-    @FXML
-    private Label playerName;
+    @FXML private ImageView topCard1, topCard2, topCard3;
+    @FXML private ImageView bottomCard1, bottomCard2, bottomCard3;
+    @FXML private ImageView leftCard1, leftCard2, leftCard3;
+    @FXML private ImageView rightCard1, rightCard2, rightCard3;
 
-    @FXML
-    private Pane cardPane;
+    private String player1, player2, player3, player4;
 
-    @FXML
-    private VBox topPlayerBox, leftPlayerBox, rightPlayerBox, bottomPlayerBox;
-
-    private final List<ImageView> cardsBack = new ArrayList<>();
-    private final List<ImageView> cardsFront = new ArrayList<>();
-
-    public void setPlayerName(String name) {
-        playerName.setText(name);
+    public void setPlayerNames(String p1, String p2, String p3, String p4) {
+        this.player1 = p1;
+        this.player2 = p2;
+        this.player3 = p3;
+        this.player4 = p4;
+        topPlayerName.setText(p3);
+        leftPlayerName.setText(p2);
+        rightPlayerName.setText(p4);
+        bottomPlayerName.setText(p1);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<Card> cards = NorthernPokerGame.getInstance().getDeck().getCards();
-        Image backImage = new Image(getClass().getResourceAsStream(Card.BACK_IMAGE_PATH));
+    public void dealCardsToPlayers() {
+        List<String> validCards = generateCardDeck();
 
-        for(Card card : cards) {
-            ImageView front = new ImageView(new Image(getClass().getResourceAsStream(card.getFrontImagePath())));
-            ImageView back = new ImageView(backImage);
-            front.setFitWidth(80);    front.setFitHeight(120);
-            back.setFitWidth(80);    front.setFitHeight(120);
-            cardViews.add(new CardView(card, front, back));
-            cardsBack.add(back);
-        }
+        Collections.shuffle(validCards);
 
-        double startX = 120;
-        double startY = 34;
-        for (ImageView card : cardsBack) {
-            card.setLayoutX(startX);
-            card.setLayoutY(startY);
-            cardPane.getChildren().add(card);
-            startY += 2; // Slight offset for stack effect
-        }
+        List<String> cards1 = validCards.subList(0, 3);
+        List<String> cards2 = validCards.subList(3, 6);
+        List<String> cards3 = validCards.subList(6, 9);
+        List<String> cards4 = validCards.subList(9, 12);
 
-        startShuffle();
+        setCardsToImage(bottomCard1, bottomCard2, bottomCard3, cards1);
+        setCardsToImage(leftCard1, leftCard2, leftCard3, cards2);
+        setCardsToImage(topCard1, topCard2, topCard3, cards3);
+        setCardsToImage(rightCard1, rightCard2, rightCard3, cards4);
     }
 
-    @FXML
-    private void startShuffle() {
-        // Create shuffle animation
-        List<TranslateTransition> transitions = new ArrayList<>();
-        for (ImageView card : cardsBack) {
-            TranslateTransition transition = new TranslateTransition(Duration.seconds(1), card);
-            transition.setToX((Math.random() - 0.5) * 200); // Random x movement (-100 to 100)
-            transition.setToY((Math.random() - 0.5) * 200); // Random y movement (-100 to 100)
-            transition.setOnFinished(e -> resetCardPosition(card));
-            transitions.add(transition);
-        }
+    private List<String> generateCardDeck() {
+        String[] suits = {"C", "D", "H", "S"};
+        List<String> cards = new ArrayList<>();
 
-        // Play all transitions
-        for (TranslateTransition transition : transitions) {
-            transition.play();
-        }
-
-        // Reset to stack after 1 second
-        new java.util.Timer().schedule(new java.util.TimerTask() {
-            @Override
-            public void run() {
-                javafx.application.Platform.runLater(() -> resetAllCards());
+        for (String suit : suits) {
+            for (int i = 1; i <= 10; i++) {  // Không lấy J, Q, K (11-13)
+                cards.add(suit + i); // Ví dụ: C1, H10, S5,...
             }
-        }, 1000);
-    }
-
-    private void resetCardPosition(ImageView card) {
-        card.setTranslateX(0);
-        card.setTranslateY(0);
-    }
-
-    private void resetAllCards() {
-        double startX = 120;
-        double startY = 34;
-        for (int i = 0; i < cardsBack.size(); i++) {
-            ImageView card = cardsBack.get(i);
-            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), card);
-            transition.setToX(startX - card.getLayoutX());
-            transition.setToY(startY - card.getLayoutY() + i * 2); // Stack them back
-            transition.play();
         }
+        return cards;
     }
 
-    public void quitButtonClick(ActionEvent event) throws IOException {
-        // Use a named FXMLLoader so we can access the controller
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resource/fxml/Menu.fxml"));
-        Parent root = loader.load();
-
-        // Switch scene
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(root));
+    private void setCardsToImage(ImageView c1, ImageView c2, ImageView c3, List<String> cardNames) {
+        c1.setImage(loadCardImage(cardNames.get(0)));
+        c2.setImage(loadCardImage(cardNames.get(1)));
+        c3.setImage(loadCardImage(cardNames.get(2)));
     }
 
-
+    private Image loadCardImage(String cardCode) {
+        // cardCode ví dụ: "C1", "H10", "S5", "D9"
+        String suitFolder = switch (cardCode.charAt(0)) {
+            case 'C' -> "clubs";
+            case 'D' -> "diamonds";
+            case 'H' -> "hearts";
+            case 'S' -> "spades";
+            default -> throw new IllegalArgumentException("Invalid card suit: " + cardCode);
+        };
+        String fileName = cardCode + ".png";
+        String path = "/image/card/" + suitFolder + "/" + fileName;
+        var stream = getClass().getResourceAsStream(path);
+        if (stream == null) {
+            System.err.println("Không tìm thấy ảnh: " + path);
+            return null;
+        }
+        return new Image(stream);
+    }
 }

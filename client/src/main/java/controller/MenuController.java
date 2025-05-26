@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 
@@ -54,7 +53,7 @@ public class MenuController {
         player.joinGame(game);
 
         // Use a named FXMLLoader so we can access the controller
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resource/fxml/NorthernPoker.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/NorthernPoker.fxml"));
         Parent root = loader.load();
 
         // Now you can get the controller
@@ -91,7 +90,7 @@ public class MenuController {
         }
 
         // Use a named FXMLLoader so we can access the controller
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resource/fxml/NorthernPoker.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/NorthernPoker.fxml"));
         Parent root = loader.load();
 
         NorthernPokerController controller = loader.getController();
