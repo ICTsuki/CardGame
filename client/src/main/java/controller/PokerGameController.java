@@ -29,11 +29,16 @@ public class PokerGameController implements Initializable {
     List<CardView> cardViews = new ArrayList<>();
 
     private final Map<Integer, VBox> seatMap = new HashMap<>();
+    private List<CardView> selectedCards = new ArrayList<>();
 
     @FXML
     private Pane cardPane;
     @FXML
     private VBox topPlayerBox, leftPlayerBox, rightPlayerBox, bottomPlayerBox;
+    @FXML
+    private Button playButton, passButton;
+    @FXML
+    private VBox controlBox;
 
     private final List<ImageView> cardsBack = new ArrayList<>();
     private final List<ImageView> cardsFront = new ArrayList<>();
@@ -45,6 +50,11 @@ public class PokerGameController implements Initializable {
         seatMap.put(2, topPlayerBox);
         seatMap.put(3, rightPlayerBox);
 
+        playButton.setOnAction(e -> handlePlay());
+        passButton.setOnAction(e -> handlePass());
+
+
+
         List<Card> cards = NorthernPokerGame.getInstance().getDeck().getCards();
         Image backImage = new Image(getClass().getResourceAsStream(Card.BACK_IMAGE_PATH));
 
@@ -54,7 +64,7 @@ public class PokerGameController implements Initializable {
             front.setFitWidth(80);
             front.setFitHeight(120);
             back.setFitWidth(80);
-            back.setFitHeight(120); // Fixed typo: was "front.setFitHeight(120)"
+            back.setFitHeight(120);
             cardViews.add(new CardView(card, front, back));
             cardsBack.add(back);
         }
@@ -67,10 +77,27 @@ public class PokerGameController implements Initializable {
             cardPane.getChildren().add(card);
         }
 
-        game.getDeck().shuffle();
-        game.deal();
-
         startShuffle(this::dealAnimation);
+
+        for(CardView cardView : cardViews) {
+            cardPane.setOnMouseClicked(e -> {
+                if(selectedCards.contains(cardView)) {
+                    selectedCards.remove(cardView);
+                } else {
+                    selectedCards.add(cardView);
+                }
+            });
+        }
+    }
+
+    private void handlePlay() {
+        if(selectedCards.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "You didn't select any cards", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
+
+
 
 
     }
@@ -78,32 +105,23 @@ public class PokerGameController implements Initializable {
     @FXML
     private void startShuffle(Runnable afterShuffle) {
         List<TranslateTransition> transitions = new ArrayList<>();
-        for (ImageView card : cardsBack) {
-            TranslateTransition transition = new TranslateTransition(Duration.seconds(1), card);
+        for (CardView cardView : cardViews) {
+            ImageView back = cardView.getBack();
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(1), back);
             transition.setToX((Math.random() - 0.5) * 200); // Random x movement
             transition.setToY((Math.random() - 0.5) * 200);
-            transition.setOnFinished(e -> resetCardPosition(card));
+            transition.setOnFinished(e -> resetCardPosition(back));
             transitions.add(transition);
         }
 
-        for (TranslateTransition transition : transitions) {
-            transition.play();
-        }
+        for (TranslateTransition t : transitions) t.play();
 
-        // After 1 sec delay, reset cards and run the next step
-        new java.util.Timer().schedule(new java.util.TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    resetAllCards();
-
-                    // Delay a little more before dealing
-                    PauseTransition pause = new PauseTransition(Duration.seconds(1.0));
-                    pause.setOnFinished(e -> afterShuffle.run());
-                    pause.play();
-                });
-            }
-        }, 1000); // Wait for shuffle to finish
+        PauseTransition pause = new PauseTransition(Duration.seconds(1.1));
+        pause.setOnFinished(event -> {
+            Collections.shuffle(cardViews);
+            afterShuffle.run();
+        });
+        pause.play();
     }
 
     private void resetCardPosition(ImageView card) {
@@ -111,16 +129,6 @@ public class PokerGameController implements Initializable {
         card.setTranslateY(0);
     }
 
-    private void resetAllCards() {
-        double startX = 120;
-        double startY = 34;
-        for (ImageView card : cardsBack) {
-            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), card);
-            transition.setToX(startX - card.getLayoutX());
-            transition.setToY(startY - card.getLayoutY());
-            transition.play();
-        }
-    }
 
     public void dealAnimation() {
         // Initial stack position
@@ -142,10 +150,6 @@ public class PokerGameController implements Initializable {
             frontImage.setFitHeight(120);
             cardPane.getChildren().add(frontImage);
 
-            // Remove the corresponding back image for the bottom player's cards
-            ImageView backImage = cardsBack.get(i);
-            cardPane.getChildren().remove(backImage);
-
             double finalX = bottomStartX + i * spacing;
             double finalY = bottomY;
 
@@ -161,6 +165,7 @@ public class PokerGameController implements Initializable {
             });
 
             transition.play();
+            cardView.enableSelection();
         }
 
         cardPane.getChildren().removeAll(cardsBack);
