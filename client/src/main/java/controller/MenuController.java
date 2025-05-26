@@ -1,6 +1,8 @@
 package main.java.controller;
 
+import main.java.game.gamecore.NorthernPokerGame;
 import main.java.game.gamecore.ThreeCards;
+import main.java.game.nonsystem.NorthernPokerPlayer;
 import main.java.game.nonsystem.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +23,7 @@ public class MenuController {
 
     @FXML
     private TextField playerNameField1, playerNameField2, playerNameField3, playerNameField4;
+    private NorthernPokerPlayer player2;
 
     public void TextNameField1Enter() {
         playerName1 = playerNameField1.getText();
@@ -97,16 +100,22 @@ public class MenuController {
         NorthernPokerController controller = loader.getController();
         if(playerName1 != null && !playerName1.isEmpty()) {
             controller.placePlayer(0, playerName1);
+            controller.setPlayerName1(playerName1);
         }
         if(playerName2 != null && !playerName2.isEmpty()) {
             controller.placePlayer(1, playerName2);
+            controller.setPlayerName2(playerName2);
         }
         if(playerName3 != null && !playerName3.isEmpty()) {
             controller.placePlayer(2, playerName3);
+            controller.setPlayerName3(playerName3);
         }
         if(playerName4 != null && !playerName4.isEmpty()) {
             controller.placePlayer(3, playerName4);
+            controller.setPlayerName4(playerName4);
         }
+
+
 
 
 

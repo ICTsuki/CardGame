@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import main.java.game.gamecore.NorthernPokerGame;
+import main.java.game.nonsystem.NorthernPokerPlayer;
 
 import java.io.IOException;
 import java.util.*;
@@ -54,17 +56,19 @@ public class NorthernPokerController {
 
         PokerGameController controller = loader.getController();
         if(playerName1 != null && !playerName1.isEmpty()) {
-            placePlayer(0, playerName1);
+            controller.placePlayer(0, playerName1);
         }
         if(playerName2 != null && !playerName2.isEmpty()) {
-            placePlayer(1, playerName2);
+            controller.placePlayer(1, playerName2);
         }
         if(playerName3 != null && !playerName3.isEmpty()) {
-            placePlayer(2, playerName3);
+            controller.placePlayer(2, playerName3);
         }
         if(playerName4 != null && !playerName4.isEmpty()) {
-            placePlayer(3, playerName4);
+            controller.placePlayer(3, playerName4);
         }
+
+
 
         // Switch scene
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

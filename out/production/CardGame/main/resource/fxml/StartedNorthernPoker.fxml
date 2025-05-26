@@ -34,24 +34,26 @@
 
     <!-- BOTTOM: YOU (the local player) -->
     <bottom>
-        <HBox alignment="CENTER" spacing="20" prefHeight="100.0" BorderPane.alignment="CENTER">
-            <VBox fx:id="bottomPlayerBox" alignment="CENTER" spacing="5" BorderPane.alignment="CENTER" prefWidth="100.0">
+        <AnchorPane prefHeight="100.0" BorderPane.alignment="CENTER">
+            <!-- Bottom Player Box pinned to bottom-left -->
+            <VBox fx:id="bottomPlayerBox" alignment="CENTER" spacing="5"
+                  AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+                  prefWidth="100.0">
                 <!-- Local player will be added here dynamically -->
             </VBox>
 
-            <!-- Spacer + Quit -->
-            <HBox prefWidth="200.0" />
-            <AnchorPane prefWidth="200.0">
-                <Button layoutX="147.0" layoutY="30.0" mnemonicParsing="false" onAction="#quitButtonClick" text="Quit"/>
-            </AnchorPane>
-        </HBox>
+            <!-- Quit button pinned to bottom-right -->
+            <Button text="Quit"
+                    AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                    onAction="#quitButtonClick"/>
+        </AnchorPane>
     </bottom>
+
 
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Pane fx:id = "cardPane" layoutX="120.0" layoutY="34.0" prefHeight="200.0" prefWidth="200.0" />
-         </children></AnchorPane>
+            <Pane fx:id="cardPane" layoutX="120.0" layoutY="34.0" prefHeight="200.0" prefWidth="200.0"/>
+        </AnchorPane>
     </center>
 
 </BorderPane>

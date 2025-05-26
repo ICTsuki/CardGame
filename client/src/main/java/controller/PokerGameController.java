@@ -1,6 +1,10 @@
 package main.java.controller;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
+import main.java.game.gamecore.Game;
 import main.java.game.gamecore.NorthernPokerGame;
 import main.java.game.nonsystem.Card;
 import main.java.game.nonsystem.CardView;
@@ -18,33 +22,37 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import main.java.game.nonsystem.NorthernPokerPlayer;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class PokerGameController implements Initializable {
+    private final NorthernPokerGame game = NorthernPokerGame.getInstance();
+    private NorthernPokerPlayer player1, player2, player3, player4;
+
 
     List<CardView> cardViews = new ArrayList<>();
 
-    @FXML
-    private Label playerName;
+    private final Map<Integer, VBox> seatMap = new HashMap<>();
 
     @FXML
     private Pane cardPane;
-
     @FXML
     private VBox topPlayerBox, leftPlayerBox, rightPlayerBox, bottomPlayerBox;
 
     private final List<ImageView> cardsBack = new ArrayList<>();
     private final List<ImageView> cardsFront = new ArrayList<>();
 
-    public void setPlayerName(String name) {
-        playerName.setText(name);
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        seatMap.put(0, bottomPlayerBox);
+        seatMap.put(1, leftPlayerBox);
+        seatMap.put(2, topPlayerBox);
+        seatMap.put(3, rightPlayerBox);
+
         List<Card> cards = NorthernPokerGame.getInstance().getDeck().getCards();
         Image backImage = new Image(getClass().getResourceAsStream(Card.BACK_IMAGE_PATH));
 
@@ -63,37 +71,44 @@ public class PokerGameController implements Initializable {
             card.setLayoutX(startX);
             card.setLayoutY(startY);
             cardPane.getChildren().add(card);
-            startY += 2; // Slight offset for stack effect
         }
 
-        startShuffle();
+        startShuffle(() -> dealToAllPlayersAnimated());
+
     }
 
     @FXML
-    private void startShuffle() {
-        // Create shuffle animation
+    private void startShuffle(Runnable afterShuffle) {
         List<TranslateTransition> transitions = new ArrayList<>();
         for (ImageView card : cardsBack) {
             TranslateTransition transition = new TranslateTransition(Duration.seconds(1), card);
-            transition.setToX((Math.random() - 0.5) * 200); // Random x movement (-100 to 100)
-            transition.setToY((Math.random() - 0.5) * 200); // Random y movement (-100 to 100)
+            transition.setToX((Math.random() - 0.5) * 200); // Random x movement
+            transition.setToY((Math.random() - 0.5) * 200);
             transition.setOnFinished(e -> resetCardPosition(card));
             transitions.add(transition);
         }
 
-        // Play all transitions
         for (TranslateTransition transition : transitions) {
             transition.play();
         }
 
-        // Reset to stack after 1 second
+        // After 1 sec delay, reset cards and run the next step
         new java.util.Timer().schedule(new java.util.TimerTask() {
             @Override
             public void run() {
-                javafx.application.Platform.runLater(() -> resetAllCards());
+                Platform.runLater(() -> {
+                    resetAllCards();
+
+                    // Delay a little more before dealing
+                    PauseTransition pause = new PauseTransition(Duration.seconds(1.0));
+                    pause.setOnFinished(ev -> afterShuffle.run());
+                    pause.play();
+
+                });
             }
-        }, 1000);
+        }, 1000); // Wait for shuffle to finish
     }
+
 
     private void resetCardPosition(ImageView card) {
         card.setTranslateX(0);
@@ -107,10 +122,85 @@ public class PokerGameController implements Initializable {
             ImageView card = cardsBack.get(i);
             TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), card);
             transition.setToX(startX - card.getLayoutX());
-            transition.setToY(startY - card.getLayoutY() + i * 2); // Stack them back
+            transition.setToY(startY - card.getLayoutY()); // Stack them back
             transition.play();
         }
     }
+
+    public void dealToAllPlayersAnimated() {
+        // Initial stack position
+        double sourceX = 120;
+        double sourceY = 34;
+
+        // === Deal to bottom player (you) ===
+        double bottomStartX = 200;
+        double bottomY = 350;
+        double spacing = 90;
+
+        for (int i = 0; i < 12 && i < cardViews.size(); i++) {
+            CardView cardView = cardViews.get(i);
+            ImageView frontImage = cardView.getFront();
+
+            frontImage.setLayoutX(sourceX);
+            frontImage.setLayoutY(sourceY);
+            frontImage.setFitWidth(80);
+            frontImage.setFitHeight(120);
+            cardPane.getChildren().add(frontImage);
+
+            double finalX = bottomStartX + i * spacing;
+            double finalY = bottomY;
+
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), frontImage);
+            transition.setToX(finalX - sourceX);
+            transition.setToY(finalY - sourceY);
+            transition.setDelay(Duration.millis(i * 150));
+            transition.setOnFinished(e -> {
+                frontImage.setLayoutX(finalX);
+                frontImage.setLayoutY(finalY);
+                frontImage.setTranslateX(0);
+                frontImage.setTranslateY(0);
+            });
+
+            transition.play();
+        }
+
+        // === Deal to other players (1 back card animation) ===
+        int delayOffset = 5 * 150; // delay until bottom cards done
+
+        int[] seatIndices = {1, 2, 3}; // left, top, right
+        double[][] targetPositions = {
+                {60, 220},   // Left
+                {280, 60},   // Top
+                {500, 220}   // Right
+        };
+
+        Image backImage = new Image(getClass().getResourceAsStream(Card.BACK_IMAGE_PATH));
+        for (int i = 0; i < seatIndices.length; i++) {
+            ImageView backView = new ImageView(backImage);
+            backView.setFitWidth(80);
+            backView.setFitHeight(120);
+            backView.setLayoutX(sourceX);
+            backView.setLayoutY(sourceY);
+            cardPane.getChildren().add(backView);
+
+            double targetX = targetPositions[i][0];
+            double targetY = targetPositions[i][1];
+
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), backView);
+            transition.setToX(targetX - sourceX);
+            transition.setToY(targetY - sourceY);
+            transition.setDelay(Duration.millis(delayOffset + i * 200));
+            transition.setOnFinished(e -> {
+                backView.setLayoutX(targetX);
+                backView.setLayoutY(targetY);
+                backView.setTranslateX(0);
+                backView.setTranslateY(0);
+            });
+
+            transition.play();
+        }
+    }
+
 
     public void quitButtonClick(ActionEvent event) throws IOException {
         // Use a named FXMLLoader so we can access the controller
@@ -122,5 +212,38 @@ public class PokerGameController implements Initializable {
         window.setScene(new Scene(root));
     }
 
+    public void placePlayer(int seatIndex, String playerName) {
+        Image avatar = new Image(getClass().getResourceAsStream("/main/resource/image/player/playerimage.png"));
+        ImageView imageView = new ImageView(avatar);
+        imageView.setFitHeight(60);
+        imageView.setFitWidth(60);
+
+        Label label = new Label(playerName);
+        VBox avatarBox = new VBox(imageView, label);
+        avatarBox.setAlignment(Pos.CENTER);
+        avatarBox.setSpacing(5);
+
+        VBox seat = seatMap.get(seatIndex);
+        Platform.runLater(() -> {
+            seat.getChildren().clear(); // in case of reconnect/replacement
+            seat.getChildren().add(avatarBox);
+        });
+
+        int playerCount = NorthernPokerGame.players.size();
+        if(playerCount == 0) {
+            player1 = new NorthernPokerPlayer(playerName);
+            player1.joinGame(game);
+        } else if(playerCount == 1) {
+            player2 = new NorthernPokerPlayer(playerName);
+            player2.joinGame(game);
+        } else if(playerCount == 2){
+            player3 = new NorthernPokerPlayer(playerName);
+            player3.joinGame(game);
+        } else {
+            player4 = new NorthernPokerPlayer(playerName);
+            player4.joinGame(game);
+        }
+
+    }
 
 }
