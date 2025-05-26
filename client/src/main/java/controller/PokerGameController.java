@@ -39,6 +39,8 @@ public class PokerGameController implements Initializable {
     private Button playButton, passButton;
     @FXML
     private VBox controlBox;
+    @FXML
+    private HBox tablePane;
 
     private final List<ImageView> cardsBack = new ArrayList<>();
     private final List<ImageView> cardsFront = new ArrayList<>();
@@ -49,11 +51,6 @@ public class PokerGameController implements Initializable {
         seatMap.put(1, leftPlayerBox);
         seatMap.put(2, topPlayerBox);
         seatMap.put(3, rightPlayerBox);
-
-        playButton.setOnAction(e -> handlePlay());
-        passButton.setOnAction(e -> handlePass());
-
-
 
         List<Card> cards = NorthernPokerGame.getInstance().getDeck().getCards();
         Image backImage = new Image(getClass().getResourceAsStream(Card.BACK_IMAGE_PATH));
@@ -90,6 +87,7 @@ public class PokerGameController implements Initializable {
         }
     }
 
+    @FXML
     private void handlePlay() {
         if(selectedCards.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "You didn't select any cards", ButtonType.OK);
@@ -97,9 +95,19 @@ public class PokerGameController implements Initializable {
             return;
         }
 
+        for(CardView cardView : selectedCards) {
+            cardView.getFront().setOpacity(1.0);
+            tablePane.getChildren().add(cardView.getFront());
+            cardPane.getChildren().remove(cardView.getFront());
+        }
 
+        selectedCards.clear();
+    }
 
+    @FXML
+    private void handlePass() {
 
+        return;
     }
 
     @FXML
