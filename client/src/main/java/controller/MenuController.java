@@ -1,10 +1,6 @@
 package main.java.controller;
 
-import main.java.PokerClient;
-import main.java.Server;
-import main.java.game.gamecore.NorthernPokerGame;
 import main.java.game.gamecore.ThreeCards;
-import main.java.game.nonsystem.NorthernPokerPlayer;
 import main.java.game.nonsystem.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,14 +16,29 @@ import java.net.Socket;
 
 
 public class MenuController {
-    private String playerName;
+    private String playerName1, playerName2, playerName3, playerName4;
+    private int playerCount = 0;
 
     @FXML
-    private TextField playerNameField;
+    private TextField playerNameField1, playerNameField2, playerNameField3, playerNameField4;
 
-    public void TextNameEnter() {
-        playerName = playerNameField.getText();
+    public void TextNameField1Enter() {
+        playerName1 = playerNameField1.getText();
+        playerCount++;
     }
+    public void TextNameField2Enter() {
+        playerName2 = playerNameField2.getText();
+        playerCount++;
+    }
+    public void TextNameField3Enter() {
+        playerName3 = playerNameField3.getText();
+        playerCount++;
+    }
+    public void TextNameField4Enter() {
+        playerName4 = playerNameField4.getText();
+        playerCount++;
+    }
+
 
     private void PopupNameWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resource/fxml/PopupName.fxml"));
@@ -41,8 +52,11 @@ public class MenuController {
     }
 
     public void ThreeCardButtonClick(ActionEvent event) throws IOException {
-        if(playerName == null || playerName.isEmpty()) {
-            PopupNameWindow();
+        if(playerCount < 2) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You need at least 2 players to start the game.");
+            alert.setTitle("Game Error");
+            alert.setHeaderText("Not Enough Players");
+            alert.showAndWait();
             return;
         }
 
@@ -64,26 +78,21 @@ public class MenuController {
     }
 
     public void NorthernPokerButtonClick(ActionEvent event) throws IOException {
-        if (playerName == null || playerName.isEmpty()) {
-            PopupNameWindow();
+        if(playerCount < 2) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You need at least 2 players to start the game.");
+            alert.setTitle("Game Error");
+            alert.setHeaderText("Not Enough Players");
+            alert.showAndWait();
             return;
         }
-        Server server = Server.getInstance();
-        if(server.getServerCount() == 0) {
-            server.start(1234);
-        }
-
-        Socket socket = new Socket("localhost", 1234);
-        PokerClient pokerClient = new PokerClient(socket, playerName);
 
         // Use a named FXMLLoader so we can access the controller
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resource/fxml/NorthernPoker.fxml"));
         Parent root = loader.load();
 
-        // Now you can get the controller
         NorthernPokerController controller = loader.getController();
-        controller.setPlayerName(playerName);
-        controller.placePlayer(0, playerName);
+        if()
+
 
         // Switch scene
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

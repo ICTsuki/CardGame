@@ -14,8 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import main.java.Server;
-import main.java.game.nonsystem.Player;
 
 import java.io.IOException;
 import java.util.*;
@@ -44,14 +42,6 @@ public class NorthernPokerController {
     }
 
     public void startGameButtonClick(ActionEvent event) throws IOException {
-        Server server = Server.getInstance();
-        if(server.getServerCount() < 2) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "You need at least 2 players to start the game.");
-            alert.setTitle("Game Error");
-            alert.setHeaderText("Not Enough Players");
-            alert.showAndWait();
-            return;
-        }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resource/fxml/StartedNorthernPoker.fxml"));
         Parent root = loader.load();
@@ -74,22 +64,22 @@ public class NorthernPokerController {
         window.setScene(new Scene(root));
     }
 
-    public void placePlayer(int seatIndex, String name) {
+    public void placePlayer(int seatIndex, String playerName) {
         Image avatar = new Image(getClass().getResourceAsStream("/main/resource/image/player/playerimage.png"));
         ImageView imageView = new ImageView(avatar);
         imageView.setFitHeight(60);
         imageView.setFitWidth(60);
 
-        Label label = new Label(name);
-
+        Label label = new Label(playerName);
         VBox avatarBox = new VBox(imageView, label);
         avatarBox.setAlignment(Pos.CENTER);
         avatarBox.setSpacing(5);
 
         VBox seat = seatMap.get(seatIndex);
         Platform.runLater(() -> {
-            seat.getChildren().clear();
+            seat.getChildren().clear(); // in case of reconnect/replacement
             seat.getChildren().add(avatarBox);
         });
     }
+
 }

@@ -9,7 +9,7 @@ public class ClientMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Load the FXML file
-        FXMLLoader fxmlLoader = new FXMLLoader(ServerMain.class.getResource("/main/resource/fxml/Menu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ClientMain.class.getResource("/main/resource/fxml/Menu.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         // Configure the stage
