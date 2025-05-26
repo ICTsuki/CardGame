@@ -47,6 +47,7 @@ public class PokerGameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("init called");
         seatMap.put(0, bottomPlayerBox);
         seatMap.put(1, leftPlayerBox);
         seatMap.put(2, topPlayerBox);
@@ -54,6 +55,7 @@ public class PokerGameController implements Initializable {
 
         List<Card> cards = NorthernPokerGame.getInstance().getDeck().getCards();
         Image backImage = new Image(getClass().getResourceAsStream(Card.BACK_IMAGE_PATH));
+
 
         for (Card card : cards) {
             ImageView front = new ImageView(new Image(getClass().getResourceAsStream(card.getFrontImagePath())));
@@ -77,18 +79,22 @@ public class PokerGameController implements Initializable {
         startShuffle(this::dealAnimation);
 
         for(CardView cardView : cardViews) {
-            cardPane.setOnMouseClicked(e -> {
-                if(selectedCards.contains(cardView)) {
+            cardView.getFront().setOnMouseClicked(e -> {
+                if (selectedCards.contains(cardView)) {
+                    System.out.println("Card removed");
                     selectedCards.remove(cardView);
                 } else {
+                    System.out.println("Card selected");
                     selectedCards.add(cardView);
                 }
             });
         }
     }
 
-    @FXML
-    private void handlePlay() {
+
+    public void handlePlay() {
+        System.out.println("Play button clicked");
+
         if(selectedCards.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "You didn't select any cards", ButtonType.OK);
             alert.showAndWait();
@@ -104,8 +110,7 @@ public class PokerGameController implements Initializable {
         selectedCards.clear();
     }
 
-    @FXML
-    private void handlePass() {
+    public void handlePass() {
 
         return;
     }
