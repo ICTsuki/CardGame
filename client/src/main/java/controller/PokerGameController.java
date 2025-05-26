@@ -4,22 +4,16 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
-import main.java.game.gamecore.Game;
 import main.java.game.gamecore.NorthernPokerGame;
 import main.java.game.nonsystem.Card;
 import main.java.game.nonsystem.CardView;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.image.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.java.game.nonsystem.NorthernPokerPlayer;
@@ -31,7 +25,6 @@ import java.util.*;
 public class PokerGameController implements Initializable {
     private final NorthernPokerGame game = NorthernPokerGame.getInstance();
     private NorthernPokerPlayer player1, player2, player3, player4;
-
 
     List<CardView> cardViews = new ArrayList<>();
 
@@ -45,7 +38,6 @@ public class PokerGameController implements Initializable {
     private final List<ImageView> cardsBack = new ArrayList<>();
     private final List<ImageView> cardsFront = new ArrayList<>();
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         seatMap.put(0, bottomPlayerBox);
@@ -56,11 +48,13 @@ public class PokerGameController implements Initializable {
         List<Card> cards = NorthernPokerGame.getInstance().getDeck().getCards();
         Image backImage = new Image(getClass().getResourceAsStream(Card.BACK_IMAGE_PATH));
 
-        for(Card card : cards) {
+        for (Card card : cards) {
             ImageView front = new ImageView(new Image(getClass().getResourceAsStream(card.getFrontImagePath())));
             ImageView back = new ImageView(backImage);
-            front.setFitWidth(80);    front.setFitHeight(120);
-            back.setFitWidth(80);    front.setFitHeight(120);
+            front.setFitWidth(80);
+            front.setFitHeight(120);
+            back.setFitWidth(80);
+            back.setFitHeight(120); // Fixed typo: was "front.setFitHeight(120)"
             cardViews.add(new CardView(card, front, back));
             cardsBack.add(back);
         }
@@ -73,8 +67,7 @@ public class PokerGameController implements Initializable {
             cardPane.getChildren().add(card);
         }
 
-        startShuffle(() -> dealToAllPlayersAnimated());
-
+        startShuffle(() -> dealAnimation());
     }
 
     @FXML
@@ -103,12 +96,10 @@ public class PokerGameController implements Initializable {
                     PauseTransition pause = new PauseTransition(Duration.seconds(1.0));
                     pause.setOnFinished(ev -> afterShuffle.run());
                     pause.play();
-
                 });
             }
         }, 1000); // Wait for shuffle to finish
     }
-
 
     private void resetCardPosition(ImageView card) {
         card.setTranslateX(0);
@@ -122,20 +113,20 @@ public class PokerGameController implements Initializable {
             ImageView card = cardsBack.get(i);
             TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), card);
             transition.setToX(startX - card.getLayoutX());
-            transition.setToY(startY - card.getLayoutY()); // Stack them back
+            transition.setToY(startY - card.getLayoutY());
             transition.play();
         }
     }
 
-    public void dealToAllPlayersAnimated() {
+    public void dealAnimation() {
         // Initial stack position
         double sourceX = 120;
         double sourceY = 34;
 
         // === Deal to bottom player (you) ===
-        double bottomStartX = 200;
+        double bottomStartX = 150; // Adjusted to center better
         double bottomY = 350;
-        double spacing = 90;
+        double spacing = 100; // Increased spacing to prevent overlap
 
         for (int i = 0; i < 12 && i < cardViews.size(); i++) {
             CardView cardView = cardViews.get(i);
@@ -146,6 +137,10 @@ public class PokerGameController implements Initializable {
             frontImage.setFitWidth(80);
             frontImage.setFitHeight(120);
             cardPane.getChildren().add(frontImage);
+
+            // Remove the corresponding back image for the bottom player's cards
+            ImageView backImage = cardsBack.get(i);
+            cardPane.getChildren().remove(backImage);
 
             double finalX = bottomStartX + i * spacing;
             double finalY = bottomY;
@@ -164,46 +159,10 @@ public class PokerGameController implements Initializable {
             transition.play();
         }
 
-        // === Deal to other players (1 back card animation) ===
-        int delayOffset = 5 * 150; // delay until bottom cards done
 
-        int[] seatIndices = {1, 2, 3}; // left, top, right
-        double[][] targetPositions = {
-                {60, 220},   // Left
-                {280, 60},   // Top
-                {500, 220}   // Right
-        };
-
-        Image backImage = new Image(getClass().getResourceAsStream(Card.BACK_IMAGE_PATH));
-        for (int i = 0; i < seatIndices.length; i++) {
-            ImageView backView = new ImageView(backImage);
-            backView.setFitWidth(80);
-            backView.setFitHeight(120);
-            backView.setLayoutX(sourceX);
-            backView.setLayoutY(sourceY);
-            cardPane.getChildren().add(backView);
-
-            double targetX = targetPositions[i][0];
-            double targetY = targetPositions[i][1];
-
-            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), backView);
-            transition.setToX(targetX - sourceX);
-            transition.setToY(targetY - sourceY);
-            transition.setDelay(Duration.millis(delayOffset + i * 200));
-            transition.setOnFinished(e -> {
-                backView.setLayoutX(targetX);
-                backView.setLayoutY(targetY);
-                backView.setTranslateX(0);
-                backView.setTranslateY(0);
-            });
-
-            transition.play();
-        }
     }
 
-
     public void quitButtonClick(ActionEvent event) throws IOException {
-        // Use a named FXMLLoader so we can access the controller
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resource/fxml/Menu.fxml"));
         Parent root = loader.load();
 
@@ -230,20 +189,18 @@ public class PokerGameController implements Initializable {
         });
 
         int playerCount = NorthernPokerGame.players.size();
-        if(playerCount == 0) {
+        if (playerCount == 0) {
             player1 = new NorthernPokerPlayer(playerName);
             player1.joinGame(game);
-        } else if(playerCount == 1) {
+        } else if (playerCount == 1) {
             player2 = new NorthernPokerPlayer(playerName);
             player2.joinGame(game);
-        } else if(playerCount == 2){
+        } else if (playerCount == 2) {
             player3 = new NorthernPokerPlayer(playerName);
             player3.joinGame(game);
         } else {
             player4 = new NorthernPokerPlayer(playerName);
             player4.joinGame(game);
         }
-
     }
-
 }

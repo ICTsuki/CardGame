@@ -73,6 +73,8 @@ public class NorthernPokerController {
         // Switch scene
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(new Scene(root));
+        window.setFullScreen(true);
+
     }
 
     public void quitButtonClick(ActionEvent event) throws IOException {
