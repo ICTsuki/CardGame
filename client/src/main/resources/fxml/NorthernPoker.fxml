@@ -1,57 +1,156 @@
-<?xml version="1.0" encoding="UTF-8"?>
+package main.java.controller;
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="main.java.controller.NorthernPokerController"
-            prefWidth="960" prefHeight="720"
-            style="-fx-background-image: url('/image/background/background.jpg');
-                   -fx-background-size: cover;">
+import java.io.IOException;
+import java.util.*;
 
-    <!-- Top player -->
-    <VBox fx:id="topPlayerBox" alignment="CENTER" spacing="10"
-          AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+public class NorthernPokerController {
 
-    <!-- Bottom player -->
-    <VBox fx:id="bottomPlayerBox" alignment="CENTER" spacing="10"
-          AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+@FXML private VBox topPlayerBox, leftPlayerBox, rightPlayerBox, bottomPlayerBox;
+@FXML private VBox centerPane;  //  kiểu VBox đúng với FXML
+@FXML private Button startGameButton, playAgainButton, quitButton;
 
-    <!-- Left player -->
-    <VBox fx:id="leftPlayerBox" alignment="CENTER" spacing="10" prefWidth="100.0"
-          AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="150.0" AnchorPane.bottomAnchor="150.0"/>
+private final List<ImageView> topCards = new ArrayList<>();
+private final List<ImageView> leftCards = new ArrayList<>();
+private final List<ImageView> rightCards = new ArrayList<>();
+private final List<ImageView> bottomCards = new ArrayList<>();
 
-    <!-- Right player -->
-    <VBox fx:id="rightPlayerBox" alignment="CENTER" spacing="10" prefWidth="100.0"
-          AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" AnchorPane.bottomAnchor="150.0"/>
+private final Map<Integer, VBox> seatMap = new HashMap<>();
 
-    <!-- Center Start button -->
-    <VBox fx:id="centerPane" alignment="CENTER" spacing="10"
-          AnchorPane.topAnchor="300.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="400.0">
-        <Button fx:id="startGameButton" text="Start Game" onAction="#startGameButtonClick"/>
-    </VBox>
+private String playerName1, playerName2, playerName3, playerName4;
 
-    <!-- Bottom right controls in a single row -->
-    <VBox spacing="10" alignment="CENTER_RIGHT"
-          AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="10.0">
-        <Button fx:id="playAgainButton" text="Play Again" onAction="#playAgainButtonClick"/>
-        <Button fx:id="quitButton" text="Quit" onAction="#quitButtonClick"/>
-        <ToggleButton fx:id="musicToggleButton" text="Play Music" onAction="#toggleMusic"/>
-    </VBox>
+@FXML
+public void initialize() {
+seatMap.put(0, bottomPlayerBox);
+seatMap.put(1, leftPlayerBox);
+seatMap.put(2, topPlayerBox);
+seatMap.put(3, rightPlayerBox);
+}
 
-    <!-- Result popup -->
-    <StackPane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
-               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-               pickOnBounds="false">
-        <VBox fx:id="resultBox" alignment="CENTER" spacing="10"
-              style="-fx-background-color: white; -fx-border-color: black; -fx-padding: 15; -fx-background-radius: 10;"
-              visible="false"
-              prefWidth="350" prefHeight="250"
-              maxWidth="350" maxHeight="250">
-            <Label fx:id="resultTitle" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-            <VBox fx:id="rankList" spacing="5"/>
-            <Button text="OK" onAction="#closeResultBox"/>
-        </VBox>
-    </StackPane>
+public void setPlayerName1(String name) { playerName1 = name; }
+public void setPlayerName2(String name) { playerName2 = name; }
+public void setPlayerName3(String name) { playerName3 = name; }
+public void setPlayerName4(String name) { playerName4 = name; }
 
-</AnchorPane>
+public void placePlayer(int seatIndex, String playerName) {
+Image avatar = new Image(getClass().getResourceAsStream("/image/player/playerimage.png"));
+ImageView imageView = new ImageView(avatar);
+imageView.setFitHeight(60);
+imageView.setFitWidth(60);
+
+Label label = new Label(playerName);
+VBox avatarBox = new VBox(imageView, label);
+avatarBox.setAlignment(Pos.CENTER);
+avatarBox.setSpacing(5);
+
+VBox seat = seatMap.get(seatIndex);
+seat.getChildren().clear();
+seat.getChildren().add(avatarBox);
+}
+
+@FXML
+public void startGameButtonClick() {
+startGameButton.setVisible(false);
+dealCardsToPlayers();
+}
+
+@FXML
+public void playAgainButtonClick() {
+dealCardsToPlayers();
+}
+
+@FXML
+public void quitButtonClick() {
+try {
+FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/Menu.fxml"));
+Parent root = loader.load();
+Stage stage = (Stage) quitButton.getScene().getWindow();
+stage.setScene(new Scene(root));
+} catch (IOException e) {
+e.printStackTrace();
+}
+}
+
+private void dealCardsToPlayers() {
+List<String> deck = generateCardDeck();
+Collections.shuffle(deck);
+
+setCardsTo(seatMap.get(0), bottomCards, deck.subList(0, 3));
+setCardsTo(seatMap.get(1), leftCards, deck.subList(3, 6));
+setCardsTo(seatMap.get(2), topCards, deck.subList(6, 9));
+setCardsTo(seatMap.get(3), rightCards, deck.subList(9, 12));
+}
+
+private void setCardsTo(VBox seatBox, List<ImageView> cardViews, List<String> cardCodes) {
+HBox cards = new HBox(10);
+cardViews.clear();
+for (String code : cardCodes) {
+ImageView img = new ImageView(loadCardImage(code));
+img.setFitWidth(60);
+img.setFitHeight(90);
+cards.getChildren().add(img);
+cardViews.add(img);
+}
+
+Label nameLabel = null;
+for (Node node : seatBox.getChildren()) {
+if (node instanceof Label) {
+nameLabel = (Label) node;
+break;
+} else if (node instanceof VBox vbox) {
+for (Node child : vbox.getChildren()) {
+if (child instanceof Label lbl) {
+nameLabel = lbl;
+break;
+}
+}
+}
+}
+
+seatBox.getChildren().clear();
+seatBox.getChildren().add(cards);
+if (nameLabel != null) seatBox.getChildren().add(nameLabel);
+}
+
+private List<String> generateCardDeck() {
+String[] suits = {"C", "D", "H", "S"};
+List<String> cards = new ArrayList<>();
+for (String suit : suits) {
+for (int i = 1; i <= 10; i++) {
+cards.add(suit + i);
+}
+}
+return cards;
+}
+
+private Image loadCardImage(String cardCode) {
+String suitFolder = switch (cardCode.charAt(0)) {
+case 'C' -> "clubs";
+case 'D' -> "diamonds";
+case 'H' -> "hearts";
+case 'S' -> "spades";
+default -> throw new IllegalArgumentException("Invalid suit: " + cardCode);
+};
+String fileName = cardCode + ".png";
+String path = "/image/card/" + suitFolder + "/" + fileName;
+var stream = getClass().getResourceAsStream(path);
+if (stream == null) {
+System.err.println("Không tìm thấy ảnh: " + path);
+return null;
+}
+return new Image(stream);
+}
+}

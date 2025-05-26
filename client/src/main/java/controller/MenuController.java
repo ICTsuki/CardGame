@@ -55,11 +55,11 @@ public class MenuController {
         player.joinGame(game);
 
         // Use a named FXMLLoader so we can access the controller
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/NorthernPoker.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ThreeCardGame.fxml"));
         Parent root = loader.load();
 
         // Now you can get the controller
-        NorthernPokerController controller = loader.getController();
+        ThreeCardController controller = loader.getController();
         if(playerName1 != null && !playerName1.isEmpty()) {
             controller.placePlayer(0, playerName1);
             controller.setPlayerName1(playerName1);
@@ -92,10 +92,10 @@ public class MenuController {
         }
 
         // Use a named FXMLLoader so we can access the controller
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/NorthernPoker.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ThreeCardGame.fxml"));
         Parent root = loader.load();
 
-        NorthernPokerController controller = loader.getController();
+        ThreeCardController controller = loader.getController();
         if(playerName1 != null && !playerName1.isEmpty()) {
             controller.placePlayer(0, playerName1);
         }

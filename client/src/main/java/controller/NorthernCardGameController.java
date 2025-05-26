@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 
 import java.util.*;
 
-public class PokerGameController {
+public class NorthernCardGameController {
 
     @FXML private Label topPlayerName, leftPlayerName, rightPlayerName, bottomPlayerName;
 
