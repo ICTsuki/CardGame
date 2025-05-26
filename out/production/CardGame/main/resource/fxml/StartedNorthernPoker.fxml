@@ -49,11 +49,10 @@
         </AnchorPane>
     </bottom>
 
-
     <center>
-        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <Pane fx:id="cardPane" layoutX="120.0" layoutY="34.0" prefHeight="200.0" prefWidth="200.0"/>
-        </AnchorPane>
+        <Pane fx:id="cardPane" BorderPane.alignment="CENTER" style="-fx-background-color: transparent;">
+            <!-- Bài sẽ được thêm ở đây và co giãn theo cửa sổ -->
+        </Pane>
     </center>
 
 </BorderPane>

@@ -67,7 +67,12 @@ public class PokerGameController implements Initializable {
             cardPane.getChildren().add(card);
         }
 
-        startShuffle(() -> dealAnimation());
+        game.getDeck().shuffle();
+        game.deal();
+
+        startShuffle(this::dealAnimation);
+
+
     }
 
     @FXML
@@ -94,7 +99,7 @@ public class PokerGameController implements Initializable {
 
                     // Delay a little more before dealing
                     PauseTransition pause = new PauseTransition(Duration.seconds(1.0));
-                    pause.setOnFinished(ev -> afterShuffle.run());
+                    pause.setOnFinished(e -> afterShuffle.run());
                     pause.play();
                 });
             }
@@ -109,8 +114,7 @@ public class PokerGameController implements Initializable {
     private void resetAllCards() {
         double startX = 120;
         double startY = 34;
-        for (int i = 0; i < cardsBack.size(); i++) {
-            ImageView card = cardsBack.get(i);
+        for (ImageView card : cardsBack) {
             TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), card);
             transition.setToX(startX - card.getLayoutX());
             transition.setToY(startY - card.getLayoutY());
@@ -124,11 +128,11 @@ public class PokerGameController implements Initializable {
         double sourceY = 34;
 
         // === Deal to bottom player (you) ===
-        double bottomStartX = 150; // Adjusted to center better
-        double bottomY = 350;
+        double bottomStartX = 50; // Adjusted to center better
+        double bottomY = 600;
         double spacing = 100; // Increased spacing to prevent overlap
 
-        for (int i = 0; i < 12 && i < cardViews.size(); i++) {
+        for (int i = 0; i < 13 && i < cardViews.size(); i++) {
             CardView cardView = cardViews.get(i);
             ImageView frontImage = cardView.getFront();
 
@@ -159,7 +163,7 @@ public class PokerGameController implements Initializable {
             transition.play();
         }
 
-
+        cardPane.getChildren().removeAll(cardsBack);
     }
 
     public void quitButtonClick(ActionEvent event) throws IOException {
