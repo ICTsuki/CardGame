@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="480.0" prefWidth="640.0" stylesheets="@../styles/globals.css, @../styles/game.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.PokerGameController">
+    <!-- TOP: Opponent seat -->
+    <top>
+        <VBox fx:id="topPlayerBox" alignment="CENTER" spacing="5" BorderPane.alignment="CENTER" prefHeight="100.0">
+            <!-- Top player will be added here dynamically -->
+        </VBox>
+    </top>
+
+    <!-- LEFT: Opponent seat -->
+    <left>
+        <VBox fx:id="leftPlayerBox" alignment="CENTER" spacing="5" BorderPane.alignment="CENTER" prefWidth="100.0">
+            <!-- Left player will be added here dynamically -->
+        </VBox>
+    </left>
+
+    <!-- RIGHT: Opponent seat -->
+    <right>
+        <VBox fx:id="rightPlayerBox" alignment="CENTER" spacing="5" BorderPane.alignment="CENTER" prefWidth="100.0">
+            <!-- Right player will be added here dynamically -->
+        </VBox>
+    </right>
+
+    <!-- BOTTOM: YOU (the local player) -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="20" prefHeight="100.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="bottomPlayerBox" alignment="CENTER" spacing="5" BorderPane.alignment="CENTER" prefWidth="100.0">
+                <!-- Local player will be added here dynamically -->
+            </VBox>
+
+            <!-- Spacer + Quit -->
+            <HBox prefWidth="200.0" />
+            <AnchorPane prefWidth="200.0">
+                <Button layoutX="147.0" layoutY="30.0" mnemonicParsing="false" onAction="#quitButtonClick" text="Quit"/>
+            </AnchorPane>
+        </HBox>
+    </bottom>
+
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane fx:id = "cardPane" layoutX="120.0" layoutY="34.0" prefHeight="200.0" prefWidth="200.0" />
+         </children></AnchorPane>
+    </center>
+
+</BorderPane>
