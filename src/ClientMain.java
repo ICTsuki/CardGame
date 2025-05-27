@@ -8,7 +8,7 @@ import java.io.IOException;
 public class ClientMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/main/resources/fxml/Menu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Menu.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         stage.setTitle("Card Game");
