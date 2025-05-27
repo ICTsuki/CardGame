@@ -1,4 +1,3 @@
-
 package main.java.controller;
 
 import main.java.util.AudioManager;
@@ -32,6 +31,9 @@ public class NorthernPokerController {
     private final List<Integer> playerOrder = new ArrayList<>();
     private final List<Integer> finishedPlayers = new ArrayList<>();
     private List<String> lastPlayedCards = new ArrayList<>();
+    private int firstPlayer = -1;
+    private int lastPlayerIndex = -1;
+    private boolean firstTurn = true;
 
     public void setPlayerName1(String name) { playerNames.put(0, name); }
     public void setPlayerName2(String name) { playerNames.put(1, name); }
@@ -49,7 +51,6 @@ public class NorthernPokerController {
         playButton.setVisible(false);
         passButton.setVisible(false);
         centerCardBox.setAlignment(Pos.CENTER);
-
         musicToggleButton.setSelected(AudioManager.getInstance().isPlaying());
         updateMusicButtonText();
     }
@@ -71,14 +72,11 @@ public class NorthernPokerController {
         rotatePlayersToFirst();
         renderPlayers();
         displayCurrentPlayerCards();
-
-        finishedPlayers.clear();
-        lastPlayedCards.clear();
         startGameButton.setVisible(false);
         playAgainButton.setVisible(true);
         playButton.setVisible(true);
         passButton.setVisible(true);
-        centerCardBox.getChildren().clear();
+        firstTurn = true;
     }
 
     @FXML
@@ -89,7 +87,9 @@ public class NorthernPokerController {
         finishedPlayers.clear();
         playerOrder.clear();
         lastPlayedCards.clear();
+        lastPlayerIndex = -1;
         startGameButtonClick();
+        firstTurn = true;
     }
 
     private void dealCards() {
@@ -107,18 +107,21 @@ public class NorthernPokerController {
     private void determineFirstPlayer() {
         for (Map.Entry<Integer, List<String>> entry : playerCards.entrySet()) {
             if (entry.getValue().contains("S3")) {
-                playerOrder.clear();
-                playerOrder.addAll(playerNames.keySet());
-                while (playerOrder.get(0) != entry.getKey()) {
-                    Collections.rotate(playerOrder, -1);
-                }
+                firstPlayer = entry.getKey();
                 break;
             }
+        }
+        if (firstPlayer == -1) {
+            firstPlayer = playerNames.keySet().iterator().next();
         }
     }
 
     private void rotatePlayersToFirst() {
-        // đã xoay trong determineFirstPlayer
+        playerOrder.clear();
+        playerOrder.addAll(playerNames.keySet());
+        while (playerOrder.get(0) != firstPlayer) {
+            Collections.rotate(playerOrder, -1);
+        }
     }
 
     private void renderPlayers() {
@@ -134,14 +137,11 @@ public class NorthernPokerController {
     private void displayCurrentPlayerCards() {
         clearAllCards();
         int current = playerOrder.get(0);
-        if (playerCards.get(current).isEmpty()) return;
-
         VBox seatBox = seatMap.get(current);
         HBox cardRow = new HBox(10);
         cardRow.setAlignment(Pos.CENTER);
         cardImageViews.clear();
         selectedCards.clear();
-
         for (String code : playerCards.get(current)) {
             Image img = loadCardImage(code);
             if (img != null) {
@@ -154,7 +154,6 @@ public class NorthernPokerController {
                 cardRow.getChildren().add(imageView);
             }
         }
-
         seatBox.getChildren().add(cardRow);
     }
 
@@ -205,15 +204,6 @@ public class NorthernPokerController {
         return stream != null ? new Image(stream) : null;
     }
 
-    private boolean isValidMove(List<String> playedCards, List<String> lastCards) {
-        if (lastCards.isEmpty()) return true;
-        if (playedCards.size() != lastCards.size()) return false;
-
-        List<Integer> played = playedCards.stream().map(this::cardSortValue).sorted().toList();
-        List<Integer> last = lastCards.stream().map(this::cardSortValue).sorted().toList();
-        return played.get(played.size() - 1) > last.get(last.size() - 1);
-    }
-
     @FXML
     public void playButtonClick() {
         if (selectedCards.isEmpty()) return;
@@ -222,16 +212,33 @@ public class NorthernPokerController {
         List<String> cards = playerCards.get(current);
         List<String> playedCards = new ArrayList<>(selectedCards);
 
-        if (!isValidMove(playedCards, lastPlayedCards)) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Không hợp lệ");
-            alert.setHeaderText(null);
-            alert.setContentText("Không thể đánh bài này.");
-            alert.showAndWait();
-            return;
+        // Kiểm tra lượt đầu tiên
+        if (lastPlayedCards.isEmpty()) {
+            // Người cầm 3♠ bắt buộc phải đánh 3♠
+            if (cards.contains("S3") && !playedCards.contains("S3")) {
+                showAlert("Người có 3♠ phải đánh lá 3♠ ở lượt đầu tiên.");
+                return;
+            }
+            // Chỉ cho phép các bộ hợp lệ
+            String type = detectType(playedCards);
+            if (type.equals("unknown")) {
+                showAlert("Người đầu tiên chỉ được đánh lá lẻ, đôi, ba, tứ quý, sảnh hoặc ba đôi thông.");
+                return;
+            }
+        } else {
+            if (!isValidPlay(playedCards)) {
+                showAlert("Không thể đánh bài này");
+                return;
+            }
         }
 
+        // Đánh bài
         cards.removeAll(playedCards);
+        lastPlayedCards = new ArrayList<>(playedCards);
+        lastPlayerIndex = current;
+        firstTurn = false;
+
+        // Hiển thị bài ra giữa bàn
         centerCardBox.getChildren().clear();
         for (String code : playedCards) {
             Image img = loadCardImage(code);
@@ -247,46 +254,68 @@ public class NorthernPokerController {
             }
         }
 
-        lastPlayedCards = new ArrayList<>(playedCards);
         selectedCards.clear();
-
-        if (cards.isEmpty()) {
+        if (cards.isEmpty() && !finishedPlayers.contains(current)) {
             finishedPlayers.add(current);
-            playerOrder.remove(0);
-        } else {
-            Collections.rotate(playerOrder, -1);
+            if (finishedPlayers.size() == 1) {
+
+                return;
+            }
         }
 
-        checkGameOver();
-        renderPlayers();
-        displayCurrentPlayerCards();
+        nextTurn();
+    }
+
+    private boolean isValidPlay(List<String> played) {
+        if (lastPlayedCards.isEmpty() || lastPlayerIndex == playerOrder.get(0)) return true;
+        if (played.size() != lastPlayedCards.size()) return false;
+        String type = detectType(played);
+        String lastType = detectType(lastPlayedCards);
+        return type.equals(lastType) && compare(played, lastPlayedCards) > 0;
+    }
+
+    private String detectType(List<String> cards) {
+        int size = cards.size();
+        Set<Integer> values = new HashSet<>();
+        for (String c : cards) values.add(cardSortValue(c));
+        if (size == 1) return "single";
+        if (size == 2 && values.size() == 1) return "pair";
+        if (size == 3 && values.size() == 1) return "triple";
+        if (size == 4 && values.size() == 1) return "four";
+        return "unknown";
+    }
+
+    private int compare(List<String> a, List<String> b) {
+        List<Integer> va = a.stream().map(this::cardSortValue).sorted().toList();
+        List<Integer> vb = b.stream().map(this::cardSortValue).sorted().toList();
+        return va.getLast() - vb.getLast();
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showRanking() {
+        StringBuilder sb = new StringBuilder("Kết quả xếp hạng:\n");
+        for (int i = 0; i < finishedPlayers.size(); i++) {
+            int id = finishedPlayers.get(i);
+            sb.append("Hạng ").append(i + 1).append(": ").append(playerNames.get(id)).append("\\n");
+        }
+        showAlert(sb.toString());
     }
 
     @FXML
     public void passButtonClick() {
+        nextTurn();
+    }
+
+    private void nextTurn() {
         Collections.rotate(playerOrder, -1);
         renderPlayers();
         displayCurrentPlayerCards();
-    }
-
-    private void checkGameOver() {
-        if (playerOrder.size() == 1) {
-            finishedPlayers.add(playerOrder.get(0));
-            StringBuilder result = new StringBuilder("Kết thúc trò chơi:\n");
-            for (int i = 0; i < finishedPlayers.size(); i++) {
-                String name = playerNames.get(finishedPlayers.get(i));
-                result.append("Hạng ").append(i + 1).append(": ").append(name).append("\n");
-            }
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Trò chơi kết thúc");
-            alert.setHeaderText("Xếp hạng:");
-            alert.setContentText(result.toString());
-            alert.showAndWait();
-
-            playButton.setDisable(true);
-            passButton.setDisable(true);
-        }
     }
 
     @FXML
@@ -309,23 +338,18 @@ public class NorthernPokerController {
             case 3 -> rightPlayerBox;
             default -> throw new IllegalArgumentException("Invalid seat index");
         };
-
         Image avatar = new Image(getClass().getResourceAsStream("/image/player/playerimage.png"));
         ImageView imageView = new ImageView(avatar);
         imageView.setFitWidth(70);
         imageView.setFitHeight(70);
-
         Label label = new Label(playerName);
         label.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;");
-
         VBox avatarBox = new VBox(imageView, label);
         avatarBox.setAlignment(Pos.CENTER);
         avatarBox.setSpacing(5);
-
         VBox playerBlock = new VBox(10);
         playerBlock.setAlignment(Pos.CENTER);
         playerBlock.getChildren().add(avatarBox);
-
         seatBox.getChildren().clear();
         seatBox.getChildren().add(playerBlock);
     }
