@@ -113,8 +113,6 @@ public class ThreeCardController {
     @FXML
     public void quitButtonClick() {
         try {
-
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/Menu.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) quitButton.getScene().getWindow();

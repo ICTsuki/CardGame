@@ -258,7 +258,7 @@ public class NorthernPokerController {
         if (cards.isEmpty() && !finishedPlayers.contains(current)) {
             finishedPlayers.add(current);
             if (finishedPlayers.size() == 1) {
-
+                showRanking();
                 return;
             }
         }
@@ -299,12 +299,14 @@ public class NorthernPokerController {
     }
 
     private void showRanking() {
-        StringBuilder sb = new StringBuilder("Kết quả xếp hạng:\n");
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < finishedPlayers.size(); i++) {
             int id = finishedPlayers.get(i);
-            sb.append("Hạng ").append(i + 1).append(": ").append(playerNames.get(id)).append("\\n");
+            sb.append("Winner ").append(": ").append(playerNames.get(id)).append("\n");
         }
         showAlert(sb.toString());
+        playButton.setVisible(false);
+        passButton.setVisible(false);
     }
 
     @FXML
