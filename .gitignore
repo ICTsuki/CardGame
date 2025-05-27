@@ -6,7 +6,7 @@
 *.bak
 *.zip
 *.iml
-*.class
+/*.class
 
 
 

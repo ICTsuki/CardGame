@@ -71,19 +71,11 @@ public class Card {
     }
 
 
-    public static boolean sameSuits(List<List<Card>> cards) {
+    public static boolean sameSize(List<List<Card>> cards) {
         int listSize = cards.getFirst().size();
 
         // 1. Make sure all sublists are the same size
         if (!cards.stream().allMatch(list -> list.size() == listSize)) return false;
-
-        // 2. For each index/column, check if all suits match
-        for (int i = 0; i < listSize; i++) {
-            Suit suit = cards.getFirst().get(i).getSuit(); // take suit from the first row
-            for (int j = 1; j < cards.size(); j++) {
-                if (cards.get(j).get(i).getSuit() != suit) return false;
-            }
-        }
 
         return true;
     }

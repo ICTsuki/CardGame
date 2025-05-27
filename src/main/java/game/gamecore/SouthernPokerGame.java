@@ -10,20 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NorthernPokerGame extends Game{
-    private static NorthernPokerGame instance;
+public class SouthernPokerGame extends Game{
+    private static SouthernPokerGame instance;
 
 
     public static final List<ArrayList<Card>> PokerField = new ArrayList<>();
     public final Card firstPlayCard = new Card(Suit.SPADE, Rank.THREE);
 
-    private NorthernPokerGame() {
+    private SouthernPokerGame() {
         super();
     }
 
-    public static NorthernPokerGame getInstance() {
+    public static SouthernPokerGame getInstance() {
         if(instance == null) {
-            instance = new NorthernPokerGame();
+            instance = new SouthernPokerGame();
         }
         return instance;
     }

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="main.java.controller.NorthernPokerController"
+            fx:controller="main.java.controller.SouthernPokerController"
             prefWidth="960" prefHeight="720"
             style="-fx-background-image: url('/image/background/background.jpg');
                    -fx-background-size: cover;">
@@ -34,8 +34,8 @@
 
     <HBox spacing="10" alignment="CENTER_RIGHT"
           AnchorPane.bottomAnchor="150.0" AnchorPane.rightAnchor="180.0">
-        <Button fx:id="playButton" text="Đánh" onAction="#playButtonClick"/>
-        <Button fx:id="passButton" text="Bỏ lượt" onAction="#passButtonClick"/>
+        <Button fx:id="playButton" text="Play" onAction="#playButtonClick"/>
+        <Button fx:id="passButton" text="Pass" onAction="#passButtonClick"/>
     </HBox>
 
     <VBox spacing="10" alignment="BOTTOM_RIGHT"
