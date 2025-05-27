@@ -115,8 +115,7 @@ public class Card {
     }
 
     public static boolean doubleCombo(List<Card> cards) {
-        return cards.get(0).color.equals(cards.get(1).color) &&
-                cards.get(0).rank.getRankOrder() == cards.get(1).rank.getRankOrder();
+        return cards.get(0).rank.getRankOrder() == cards.get(1).rank.getRankOrder();
     }
 
     public static boolean tripleCombo(List<Card> cards) {
@@ -130,11 +129,6 @@ public class Card {
     }
 
     public static boolean straight(List<Card> cards) {
-        Suit suitCombo = cards.getFirst().suit;
-        for(int i = 1; i < cards.size(); i++) {
-            if(!cards.get(i).suit.equals(suitCombo)) return false;
-        }
-
         List<Card> sorted = sortCardRank(cards);
         int prevRank = sorted.getFirst().rank.getRankOrder();
         for(int i = 1; i < sorted.size(); i++) {
