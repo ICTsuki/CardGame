@@ -168,7 +168,7 @@ public class ThreeCardController {
             SequentialTransition seq = setCardsToWithAnimation(seatBox, cards);
             animations.add(seq);
 
-            int score = cards.stream().mapToInt(c -> Integer.parseInt(c.substring(1))).sum() % 10;
+            int score = cards.stream().mapToInt(this::cardValue).sum() % 10;
             scores.put(name, score);
         }
 
@@ -193,10 +193,13 @@ public class ThreeCardController {
         String[] suits = {"C", "D", "H", "S"};
         List<String> cards = new ArrayList<>();
         for (String suit : suits) {
-            for (int i = 1; i <= 10; i++) {
+            for (int i = 3; i <= 10; i++) {
                 cards.add(suit + i);
             }
+            cards.add(suit + "14");
+            cards.add(suit + "15");
         }
+
         return cards;
     }
 
@@ -259,11 +262,17 @@ public class ThreeCardController {
     }
 
     private int cardValue(String cardCode) {
-        return Integer.parseInt(cardCode.substring(1));
+        int raw = Integer.parseInt(cardCode.substring(1));
+        return switch(raw) {
+            case 14 -> 1;
+            case 15 -> 2;
+            default -> raw;
+        };
     }
 
     private int suitRank(String cardCode) {
-        return switch (cardCode.charAt(0)) {
+        char suit = cardCode.charAt(0);
+        return switch (suit) {
             case 'S' -> 4;
             case 'H' -> 3;
             case 'D' -> 2;

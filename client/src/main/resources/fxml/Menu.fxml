@@ -14,20 +14,16 @@
                    -fx-background-repeat: no-repeat;
                    -fx-background-size: cover;">
 
-    <!-- Trung tâm: chọn game -->
     <center>
-        <VBox alignment="CENTER" prefWidth="640.0" BorderPane.alignment="CENTER">
-            <Label alignment="CENTER" text="CHOOSE YOUR GAME" textAlignment="JUSTIFY">
-                <font>
-                    <Font size="30.0"/>
-                </font>
+        <VBox alignment="CENTER" spacing="15" BorderPane.alignment="CENTER">
+            <Label alignment="CENTER" text="CHOOSE YOUR GAME">
+                <font><Font size="30.0"/></font>
             </Label>
             <Button alignment="CENTER" onAction="#ThreeCardButtonClick" text="Three Card"/>
             <Button alignment="CENTER" onAction="#NorthernPokerButtonClick" text="Northern Poker"/>
         </VBox>
     </center>
 
-    <!-- Bảng nhập tên người chơi -->
     <top>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
@@ -66,7 +62,8 @@
         </VBox>
     </top>
 
-    <!-- Nút phát nhạc ở góc phải dưới -->
+
+
     <bottom>
         <AnchorPane prefHeight="60.0">
             <ToggleButton fx:id="musicToggleButton" text="Play Music" onAction="#toggleMusic"
