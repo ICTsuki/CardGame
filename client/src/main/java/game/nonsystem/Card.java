@@ -9,7 +9,7 @@ public class Card {
     private final Suit suit;
     private final Rank rank;
     private final String color;
-    public static final String BACK_IMAGE_PATH = "/main/resource/image/card/backs/Back3.png";
+    public static final String BACK_IMAGE_PATH = "/main/resources/image/card/backs/Back3.png";
     private final String frontImagePath;
 
     public Card(Suit suit, Rank rank) {
@@ -19,13 +19,13 @@ public class Card {
         else color = "BLACK";
 
         if(suit.equals(Suit.CLUB)) {
-            this.frontImagePath = "/main/resource/image/card/clubs/C" + rank.getValue() + ".png";
+            this.frontImagePath = "/main/resources/image/card/clubs/C" + rank.getValue() + ".png";
         } else if(suit.equals(Suit.SPADE)) {
-            this.frontImagePath = "/main/resource/image/card/spades/S" + rank.getValue() + ".png";
+            this.frontImagePath = "/main/resources/image/card/spades/S" + rank.getValue() + ".png";
         }else if (suit.equals(Suit.DIAMOND)) {
-            this.frontImagePath = "/main/resource/image/card/diamonds/D" + rank.getValue() + ".png";
+            this.frontImagePath = "/main/resources/image/card/diamonds/D" + rank.getValue() + ".png";
         }else {
-            this.frontImagePath = "/main/resource/image/card/hearts/H" + rank.getValue() + ".png";
+            this.frontImagePath = "/main/resources/image/card/hearts/H" + rank.getValue() + ".png";
         }
     }
 

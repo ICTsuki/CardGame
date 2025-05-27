@@ -1,0 +1,33 @@
+3 CAY (THREE CARDS) GAME RULES
+
+1. Deck:
+- Standard 52-card deck.
+- Only use cards from A to 9 in each suit (10, J, Q, K are removed).
+
+2. Number of players:
+- From 2 to 9 players.
+
+3. Dealing cards:
+- Each player receives 3 cards.
+
+4. Scoring:
+- Add up the values of all 3 cards.
+- A = 1 point, 2–9 = face value.
+- Only the unit digit of the total is counted (e.g., 18 points = 8 points).
+- If all 3 cards are of the same suit, it’s called “liêng” (flush) and is ranked separately.
+
+5. Comparing scores:
+- Higher score wins.
+- If tied, compare suits: Diamonds > Hearts > Clubs > Spades.
+- If suits are also tied, it’s a draw.
+
+6. Gameplay:
+- One player acts as the "dealer" (banker), others are "players".
+- Each player places a bet.
+- Cards are revealed and scores compared.
+- If a player scores higher than the dealer, they win the bet.
+- If lower, they lose the bet.
+- If tied, it’s a draw.
+
+7. Variations:
+- May play “chương” (one banker) or “sòng” (everyone vs everyone).
