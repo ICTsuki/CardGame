@@ -47,9 +47,9 @@ public class MenuController {
             showAlert();
             return;
         }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NorthernPoker.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SouthernPoker.fxml"));
         Parent root = loader.load();
-        NorthernPokerController controller = loader.getController();
+        SouthernPokerController controller = loader.getController();
         setPlayerNames(controller);
         switchScene(event, root);
     }
@@ -60,7 +60,7 @@ public class MenuController {
             if (playerName2 != null && !playerName2.isEmpty()) { tc.placePlayer(1, playerName2); tc.setPlayerName2(playerName2); }
             if (playerName3 != null && !playerName3.isEmpty()) { tc.placePlayer(2, playerName3); tc.setPlayerName3(playerName3); }
             if (playerName4 != null && !playerName4.isEmpty()) { tc.placePlayer(3, playerName4); tc.setPlayerName4(playerName4); }
-        } else if (controller instanceof NorthernPokerController np) {
+        } else if (controller instanceof SouthernPokerController np) {
             if (playerName1 != null && !playerName1.isEmpty()) { np.placePlayer(0, playerName1); np.setPlayerName1(playerName1); }
             if (playerName2 != null && !playerName2.isEmpty()) { np.placePlayer(1, playerName2); np.setPlayerName2(playerName2); }
             if (playerName3 != null && !playerName3.isEmpty()) { np.placePlayer(2, playerName3); np.setPlayerName3(playerName3); }

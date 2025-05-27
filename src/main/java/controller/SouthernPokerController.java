@@ -17,7 +17,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.*;
 
-public class NorthernPokerController {
+public class SouthernPokerController {
     @FXML private VBox topPlayerBox, leftPlayerBox, rightPlayerBox, bottomPlayerBox, centerPane;
     @FXML private Button startGameButton, quitButton, playAgainButton, playButton, passButton;
     @FXML private ToggleButton musicToggleButton;
@@ -216,18 +216,18 @@ public class NorthernPokerController {
         if (lastPlayedCards.isEmpty()) {
             // Người cầm 3♠ bắt buộc phải đánh 3♠
             if (cards.contains("S3") && !playedCards.contains("S3")) {
-                showAlert("Người có 3♠ phải đánh lá 3♠ ở lượt đầu tiên.");
+                showAlert("Player with 3♠ must play 3♠ in the first play.");
                 return;
             }
             // Chỉ cho phép các bộ hợp lệ
             String type = detectType(playedCards);
             if (type.equals("unknown")) {
-                showAlert("Người đầu tiên chỉ được đánh lá lẻ, đôi, ba, tứ quý, sảnh hoặc ba đôi thông.");
+                showAlert("Cannot play these card(s).");
                 return;
             }
         } else {
             if (!isValidPlay(playedCards)) {
-                showAlert("Không thể đánh bài này");
+                showAlert("Cannot play these card(s)");
                 return;
             }
         }

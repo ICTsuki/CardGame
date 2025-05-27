@@ -1,15 +1,15 @@
-import main.java.game.gamecore.NorthernPokerGame;
-import main.java.game.nonsystem.NorthernPokerPlayer;
+import main.java.game.gamecore.SouthernPokerGame;
+import main.java.game.nonsystem.SouthernPokerPlayer;
 
 
 public class CardGame {
     public static void main(String[] args) {
-        NorthernPokerPlayer player1 = new NorthernPokerPlayer("Bao");
-        NorthernPokerPlayer player2 = new NorthernPokerPlayer("A Duc");
-        NorthernPokerPlayer player3 = new NorthernPokerPlayer("Hung");
-        NorthernPokerPlayer player4 = new NorthernPokerPlayer("Khoa");
+        SouthernPokerPlayer player1 = new SouthernPokerPlayer("Bao");
+        SouthernPokerPlayer player2 = new SouthernPokerPlayer("A Duc");
+        SouthernPokerPlayer player3 = new SouthernPokerPlayer("Hung");
+        SouthernPokerPlayer player4 = new SouthernPokerPlayer("Khoa");
 
-        NorthernPokerGame game = NorthernPokerGame.getInstance();
+        SouthernPokerGame game = SouthernPokerGame.getInstance();
         player2.joinGame(game);
         player1.joinGame(game);
         player3.joinGame(game);

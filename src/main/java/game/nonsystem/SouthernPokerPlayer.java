@@ -1,7 +1,9 @@
 package main.java.game.nonsystem;
 
-import main.java.game.gamecore.NorthernPokerGame;
+import main.java.game.gamecore.SouthernPokerGame;
+import main.java.game.gameenum.Rank;
 import main.java.game.gameenum.Status;
+import main.java.game.gameenum.Suit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,15 +16,15 @@ import java.io.IOException;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-public class NorthernPokerPlayer extends Player {
+public class SouthernPokerPlayer extends Player {
     private final Scanner scanner = new Scanner(System.in);
-    private static final Logger LOGGER = Logger.getLogger(NorthernPokerPlayer.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SouthernPokerPlayer.class.getName());
 
-    public NorthernPokerPlayer() {
+    public SouthernPokerPlayer() {
         super();
     }
 
-    public NorthernPokerPlayer(String name) {
+    public SouthernPokerPlayer(String name) {
         super(name);
     }
 
@@ -38,7 +40,7 @@ public class NorthernPokerPlayer extends Player {
 
     public void playATurn() {
         spacing();
-        if (!NorthernPokerGame.PokerField.isEmpty()) NorthernPokerGame.showPokerField();
+        if (!SouthernPokerGame.PokerField.isEmpty()) SouthernPokerGame.showPokerField();
         spacing();
         showInfo();
         System.out.println("Cards on hand: ");
@@ -55,8 +57,8 @@ public class NorthernPokerPlayer extends Player {
             }
         }
 
-        if (cardsToPlay != null) NorthernPokerGame.PokerField.add(cardsToPlay);
-        NorthernPokerGame.previousPlayer = this;
+        if (cardsToPlay != null) SouthernPokerGame.PokerField.add(cardsToPlay);
+        SouthernPokerGame.previousPlayer = this;
         clearScreen();
     }
 
@@ -98,21 +100,21 @@ public class NorthernPokerPlayer extends Player {
 
 
     private boolean valid(List<Card> playCards) {
-        if(NorthernPokerGame.PokerField.isEmpty()) {
+        if(SouthernPokerGame.PokerField.isEmpty()) {
             return validCombo(playCards);
         }
 
-        List<Card> fieldCards = NorthernPokerGame.PokerField.getFirst();
+        List<Card> fieldCards = SouthernPokerGame.PokerField.getFirst();
         if(playCards == null) return true;
 
-        if (NorthernPokerGame.previousPlayer.equals(this)) { // Player continue to play since no one can play back
-            int t = NorthernPokerGame.players.size();
+        if (SouthernPokerGame.previousPlayer.equals(this)) { // Player continue to play since no one can play back
+            int t = SouthernPokerGame.players.size();
 
             while (t-- > 0) {
-                Player player = NorthernPokerGame.players.poll();
+                Player player = SouthernPokerGame.players.poll();
                 if (player != null) {
                     player.setState(Status.READY);
-                    NorthernPokerGame.players.add(player);
+                    SouthernPokerGame.players.add(player);
                 }
                 else break;
             }
@@ -120,7 +122,8 @@ public class NorthernPokerPlayer extends Player {
             return validCombo(playCards);
         }
 
-        return Card.sameSuits(Arrays.asList(playCards, fieldCards)) &&
+
+        return Card.sameSize(Arrays.asList(playCards, fieldCards)) &&
                 Card.isBigger(playCards, fieldCards);
     }
 
