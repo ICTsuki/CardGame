@@ -4,6 +4,7 @@ import main.java.game.gamecore.SouthernPokerGame;
 import main.java.game.gameenum.Rank;
 import main.java.game.gameenum.Status;
 import main.java.game.gameenum.Suit;
+import main.java.game.gameinterface.Action;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +16,8 @@ import java.io.IOException;
 
 import java.util.logging.Logger;
 import java.util.logging.Level;
+
+import static main.java.game.nonsystem.Card.*;
 
 public class SouthernPokerPlayer extends Player {
     private final Scanner scanner = new Scanner(System.in);
@@ -32,13 +35,8 @@ public class SouthernPokerPlayer extends Player {
         for (int i = 0; i < 1; i++) System.out.println();
     }
 
-    public void clearScreen() {
-        for(int i = 0; i < 5; i++) {
-            spacing();
-        }
-    }
-
     public void playATurn() {
+        if(SouthernPokerGame.previousPlayer != null) System.out.println(SouthernPokerGame.previousPlayer.getName());
         spacing();
         if (!SouthernPokerGame.PokerField.isEmpty()) SouthernPokerGame.showPokerField();
         spacing();
@@ -57,9 +55,12 @@ public class SouthernPokerPlayer extends Player {
             }
         }
 
-        if (cardsToPlay != null) SouthernPokerGame.PokerField.add(cardsToPlay);
-        SouthernPokerGame.previousPlayer = this;
-        clearScreen();
+        if (cardsToPlay != null) {
+            SouthernPokerGame.PokerField.add(cardsToPlay);
+            SouthernPokerGame.previousPlayer = this;
+        }
+
+        Action.clearScreen();
     }
 
     public void pass() {
@@ -79,13 +80,17 @@ public class SouthernPokerPlayer extends Player {
             inspectRules();
             return chooseCards();
         }
-        if (str.equals("-1")) return null;
+        if (str.equals("-1")) {
+            if(!SouthernPokerGame.previousPlayer.equals(this)) return null;
+            else {
+                System.out.println("You're free to play any card");
+                return chooseCards();
+            }
+        }
         for (String s : str.trim().split("\\s+")) {
             if (s.isEmpty()) continue;
             cardChosen.add(hand.get(Integer.parseInt(s)));
         }
-
-
         return cardChosen;
     }
 
@@ -116,16 +121,17 @@ public class SouthernPokerPlayer extends Player {
         }
 
 
-        return Card.sameSize(Arrays.asList(playCards, fieldCards)) &&
+        return sameComboType(playCards, fieldCards) &&
                 Card.isBigger(playCards, fieldCards);
+
     }
 
     private boolean validCombo(List<Card> playCards) {
         return playCards.size() == 1 ||
-                Card.doubleCombo(playCards) ||
+                doubleCombo(playCards) ||
                 Card.tripleCombo(playCards) ||
-                Card.straight(playCards) ||
-                Card.quadCombo(playCards);
+                straight(playCards) ||
+                quadCombo(playCards);
     }
 
     public void inspectRules(){
@@ -165,5 +171,13 @@ public class SouthernPokerPlayer extends Player {
         }
     }
 
+    public static boolean sameComboType(List<Card> cards1, List<Card> cards2) {
+        return (cards1.size() == cards2.size()) &&
+                ((doubleCombo(cards1) && doubleCombo(cards2)) ||
+                        (tripleCombo(cards1) && tripleCombo(cards2)) ||
+                        (quadCombo(cards1) && quadCombo(cards2)) ||
+                        (straight(cards1) && straight(cards2)) ||
+                        (cards1.size() == 1 && cards2.size() == 1));
+    }
 
 }

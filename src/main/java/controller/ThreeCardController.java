@@ -232,7 +232,6 @@ public class ThreeCardController {
             List<String> cardsA = playerCards.get(a.getPlayerName());
             List<String> cardsB = playerCards.get(b.getPlayerName());
 
-            // Tìm lá có số lớn nhất
             String maxA = cardsA.stream().max(Comparator.comparingInt(this::cardValue)).orElse("C1");
             String maxB = cardsB.stream().max(Comparator.comparingInt(this::cardValue)).orElse("C1");
 
@@ -240,18 +239,18 @@ public class ThreeCardController {
             int valueB = cardValue(maxB);
 
             if (valueA != valueB) {
-                return Integer.compare(valueB, valueA);  // ai lớn hơn thì thắng
+                return Integer.compare(valueB, valueA);
             }
 
-            // Nếu cùng số → so chất
+
             return Integer.compare(suitRank(maxB), suitRank(maxA));
         });
-        resultTitle.setText("🏆 Bảng Xếp Hạng Người Chơi");
+        resultTitle.setText("Player Rank");
         rankList.getChildren().clear();
 
         int rank = 1;
         for (RankEntry re : ranks) {
-            Label label = new Label(rank++ + ". " + re.getPlayerName() + " - " + re.getScore() + " điểm");
+            Label label = new Label(rank++ + ". " + re.getPlayerName() + " - " + re.getScore() + " point(s).");
             label.setStyle("-fx-font-size: 14px;");
             rankList.getChildren().add(label);
         }

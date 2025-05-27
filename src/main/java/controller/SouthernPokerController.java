@@ -212,14 +212,13 @@ public class SouthernPokerController {
         List<String> cards = playerCards.get(current);
         List<String> playedCards = new ArrayList<>(selectedCards);
 
-        // Kiểm tra lượt đầu tiên
         if (lastPlayedCards.isEmpty()) {
-            // Người cầm 3♠ bắt buộc phải đánh 3♠
+
             if (cards.contains("S3") && !playedCards.contains("S3")) {
                 showAlert("Player with 3♠ must play 3♠ in the first play.");
                 return;
             }
-            // Chỉ cho phép các bộ hợp lệ
+
             String type = detectType(playedCards);
             if (type.equals("unknown")) {
                 showAlert("Cannot play these card(s).");
@@ -232,13 +231,11 @@ public class SouthernPokerController {
             }
         }
 
-        // Đánh bài
         cards.removeAll(playedCards);
         lastPlayedCards = new ArrayList<>(playedCards);
         lastPlayerIndex = current;
         firstTurn = false;
 
-        // Hiển thị bài ra giữa bàn
         centerCardBox.getChildren().clear();
         for (String code : playedCards) {
             Image img = loadCardImage(code);

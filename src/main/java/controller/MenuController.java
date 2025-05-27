@@ -42,7 +42,7 @@ public class MenuController {
         switchScene(event, root);
     }
 
-    public void NorthernPokerButtonClick(ActionEvent event) throws IOException {
+    public void SouthernPokerButtonClick(ActionEvent event) throws IOException {
         if (playerCount < 2) {
             showAlert();
             return;

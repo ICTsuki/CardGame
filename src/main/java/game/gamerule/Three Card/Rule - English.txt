@@ -21,13 +21,4 @@
 - If tied, compare suits: Diamonds > Hearts > Clubs > Spades.
 - If suits are also tied, it’s a draw.
 
-6. Gameplay:
-- One player acts as the "dealer" (banker), others are "players".
-- Each player places a bet.
-- Cards are revealed and scores compared.
-- If a player scores higher than the dealer, they win the bet.
-- If lower, they lose the bet.
-- If tied, it’s a draw.
 
-7. Variations:
-- May play “chương” (one banker) or “sòng” (everyone vs everyone).

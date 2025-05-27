@@ -15,7 +15,7 @@ public class AudioManager {
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         } catch (Exception e) {
-            System.err.println("Không thể khởi tạo nhạc nền: " + e.getMessage());
+            System.err.println("Can't play music " + e.getMessage());
         }
     }
 

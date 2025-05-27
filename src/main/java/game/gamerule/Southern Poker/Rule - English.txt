@@ -7,7 +7,6 @@ Vietnamese Northern Poker Game Rule - English
 
 2. CARD RANKING:
 - Card values in ascending order: 3 < 4 < 5 < 6 < 7 < 8 < 9 < 10 < J < Q < K < A < 2
-- Suits ranked from weakest to strongest: Spades < Clubs < Diamonds < Hearts
 - The 2 is the highest value card, but has restrictions when being played.
 
 3. GAMEPLAY:
@@ -23,22 +22,16 @@ Vietnamese Northern Poker Game Rule - English
 - Straight: 3 or more consecutive cards (different suits, no 2s allowed).
 - Four of a Kind: Four cards of the same value (can beat a 2).
 
-5. SPECIAL "BEATING" RULES:
-- Cards with value 2 can only be beaten by: A Four of a Kind
-- The 2♥ (Two of Hearts) is the strongest single and can only be beaten by combos.
-- 2s are not allowed in straights.
-
-6. END OF ROUND:
+5. END OF ROUND:
 - The first player to play all their cards wins.
 
-
-7. OPTIONAL HOUSE RULES:
+6. OPTIONAL HOUSE RULES:
 - Chain Beating: A special combo can beat a previously played combo.
 - No playing 2 as the final card.
 - Instant Win Conditions (auto-win if holding certain combinations):
   + Four 2s, six pairs, five pairs + one triple, 12-card straight, etc.
 
-8. STRATEGY TIPS:
+7. STRATEGY TIPS:
 - Try to get rid of single cards early to avoid being stuck with them.
 - Save powerful cards (Aces, 2s) for defense later in the game.
 - Watch other players’ moves to guess what combos they may have.

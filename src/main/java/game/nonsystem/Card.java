@@ -9,7 +9,6 @@ public class Card {
     private final Suit suit;
     private final Rank rank;
     private final String color;
-    public static final String BACK_IMAGE_PATH = "/main/resources/image/card/backs/Back3.png";
     private final String frontImagePath;
 
     public Card(Suit suit, Rank rank) {
@@ -48,10 +47,6 @@ public class Card {
         return rank;
     }
 
-    public String getFrontImagePath() {
-        return frontImagePath;
-    }
-
     @Override
     public String toString() {
         return rank + " of " + suit;
@@ -71,16 +66,6 @@ public class Card {
     }
 
 
-    public static boolean sameSize(List<List<Card>> cards) {
-        int listSize = cards.getFirst().size();
-
-        // 1. Make sure all sublists are the same size
-        if (!cards.stream().allMatch(list -> list.size() == listSize)) return false;
-
-        return true;
-    }
-
-
 
     /**
      * This method compare cards you're going to play with field cards
@@ -88,45 +73,60 @@ public class Card {
      * @param cards2 Current cards on field
      * @return true if your card2 bigger than field cards
      */
-    public static boolean isBigger(List<Card> cards1, List<Card> cards2) { // 2 set of cards has been checked for same suit before
-        if(quadCombo(cards2)) {
-            if(!quadCombo(cards1)) return false;
-            else {
-                return cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
-            }
-        } else if(quadCombo(cards1)) return true;
+    public static boolean isBigger(List<Card> cards1, List<Card> cards2) {
+        if (cards1 == null || cards2 == null || cards1.size() != cards2.size()) return false;
 
-        if(doubleCombo(cards1) && doubleCombo(cards2)) {
-            return cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
+        // QUAD
+        if (quadCombo(cards2)) {
+            return quadCombo(cards1) &&
+                    cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
+        } else if (quadCombo(cards1)) {
+            return true;
         }
-        if(tripleCombo(cards1) && tripleCombo(cards2)) {
-            return cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
+
+        // TRIPLE
+        if (tripleCombo(cards2)) {
+            return tripleCombo(cards1) &&
+                    cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
         }
-        if(straight(cards2) && !straight(cards1)) return false;
-        return cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
+
+        // DOUBLE
+        if (doubleCombo(cards2)) {
+            return doubleCombo(cards1) &&
+                    cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
+        }
+
+        // STRAIGHT
+        if (straight(cards2)) {
+            return straight(cards1) &&
+                    cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
+        }
+
+        // SINGLE
+        return cards1.size() == 1 && cards2.size() == 1 &&
+                cards1.getFirst().rank.getRankOrder() > cards2.getFirst().rank.getRankOrder();
     }
 
+
     public static boolean doubleCombo(List<Card> cards) {
-        return cards.get(0).color.equals(cards.get(1).color) &&
-                cards.get(0).rank.getRankOrder() == cards.get(1).rank.getRankOrder();
+        if(cards.size() < 2) return false;
+        return cards.get(0).rank.getRankOrder() == cards.get(1).rank.getRankOrder();
     }
 
     public static boolean tripleCombo(List<Card> cards) {
+        if(cards.size() < 3) return false;
         return cards.get(0).rank.getRankOrder() == cards.get(1).rank.getRankOrder() &&
                 cards.get(1).rank.getRankOrder() == cards.get(2).rank.getRankOrder();
     }
 
     public static boolean quadCombo(List<Card> cards) {
+        if(cards.size() != 4) return  false;
         int rankCombo = cards.getFirst().rank.getRankOrder();
         return cards.stream().allMatch(card -> card.getRank().getRankOrder() == rankCombo);
     }
 
     public static boolean straight(List<Card> cards) {
-        Suit suitCombo = cards.getFirst().suit;
-        for(int i = 1; i < cards.size(); i++) {
-            if(!cards.get(i).suit.equals(suitCombo)) return false;
-        }
-
+        if(cards.size() < 3) return  false;
         List<Card> sorted = sortCardRank(cards);
         int prevRank = sorted.getFirst().rank.getRankOrder();
         for(int i = 1; i < sorted.size(); i++) {
@@ -134,6 +134,6 @@ public class Card {
             prevRank = sorted.get(i).rank.getRankOrder();
         }
 
-        return true;
+        return cards.getFirst().rank.getRankOrder() != 13;
     }
 }
