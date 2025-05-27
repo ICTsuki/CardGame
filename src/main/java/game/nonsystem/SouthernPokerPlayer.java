@@ -142,12 +142,12 @@ public class SouthernPokerPlayer extends Player {
             scanner.nextLine();
 
             if (t == 0) {
-                File file = new File("src/client/model/gamerule/Northern Poker/Rule - VietNamese.txt");
+                File file = new File("src/main/java/game/gamerule/Southern Poker/Rule - VietNamese.txt");
                 System.out.println("Absolute path: " + file.getAbsolutePath());
                 openTextFile(file);
                 break;
             } else if (t == 1) {
-                File file = new File("src/client/model/gamerule/Northern Poker/Rule - English.txt");
+                File file = new File("src/main/java/game/gamerule/Southern Poker/Rule - English.txt");
                 openTextFile(file);
                 break;
             } else {

@@ -15,7 +15,6 @@ public class SouthernPokerGame extends Game{
 
 
     public static final List<ArrayList<Card>> PokerField = new ArrayList<>();
-    public final Card firstPlayCard = new Card(Suit.SPADE, Rank.THREE);
 
     private SouthernPokerGame() {
         super();
@@ -36,9 +35,6 @@ public class SouthernPokerGame extends Game{
             Objects.requireNonNull(current).receiveCard(deck.dealCard());
             players.add(current);
         }
-        Player found = players.stream()
-                        .filter(player -> player.getHand().contains(firstPlayCard))
-                        .findFirst().orElse(null);
 
     }
 
@@ -60,8 +56,7 @@ public class SouthernPokerGame extends Game{
                 players.add(current);
                 current = players.poll();
             }
-            if(current == null) System.out.println("Null player");
-            else System.out.println("End game");
+            System.out.println("End game");
 
         }
         else {

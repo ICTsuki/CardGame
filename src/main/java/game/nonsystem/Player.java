@@ -9,7 +9,7 @@ public class Player extends Participant {
     }
 
     public void showCardOnHand() {
-        hand = Card.sortCardSuit(hand);
+        hand = Card.sortCardRank(hand);
         int i = 0;
         for (Card card : hand) {
             System.out.println(i + ": " + card.toString());
