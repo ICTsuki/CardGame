@@ -21,8 +21,4 @@ public abstract class Game {
     public abstract void deal();
 
     public abstract void startGame();
-
-    public Deck getDeck() {
-        return deck;
-    }
 }

@@ -8,35 +8,10 @@ import java.util.stream.Collectors;
 public class Card {
     private final Suit suit;
     private final Rank rank;
-    private final String color;
-    private final String frontImagePath;
 
     public Card(Suit suit, Rank rank) {
         this.suit= suit;
         this.rank = rank;
-        if(suit.equals(Suit.HEART) || suit.equals(Suit.DIAMOND)) color = "RED";
-        else color = "BLACK";
-
-        if(suit.equals(Suit.CLUB)) {
-            this.frontImagePath = "/main/resources/image/card/clubs/C" + rank.getValue() + ".png";
-        } else if(suit.equals(Suit.SPADE)) {
-            this.frontImagePath = "/main/resources/image/card/spades/S" + rank.getValue() + ".png";
-        }else if (suit.equals(Suit.DIAMOND)) {
-            this.frontImagePath = "/main/resources/image/card/diamonds/D" + rank.getValue() + ".png";
-        }else {
-            this.frontImagePath = "/main/resources/image/card/hearts/H" + rank.getValue() + ".png";
-        }
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-
-        if (obj == null || getClass() != obj.getClass()) return false;
-
-        Card card = (Card) obj;
-        return this.rank.getRankOrder() == card.rank.getRankOrder()
-                && this.suit.getSuitOrder() == card.suit.getSuitOrder();
     }
 
     public Suit getSuit() {
